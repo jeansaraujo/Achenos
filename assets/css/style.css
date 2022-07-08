@@ -1,0 +1,23 @@
+.logo>img{
+    width: 12em;
+}
+.barra{
+    background-color: #144D84;
+    height: 3vh;
+    margin: nome;
+}
+ul{
+    list-style-type: none;
+}
+.caixa-item{
+    width: 12vw;
+    text-align: center;
+}
+.caixa-item:hover{
+    border-bottom: #144D84 2px solid;
+    width: 12vw;
+    text-align: center;
+}
+li>a{
+    text-decoration: none;
+}
