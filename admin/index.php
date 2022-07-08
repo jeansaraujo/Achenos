@@ -40,7 +40,12 @@
                 <a href="" class="btn btn-outline-primary">Slider</a>
                 <a href="" class="btn btn-outline-primary">Categorias</a>
             </div>
-            <div class="col-10"></div>
+            <div class="col-10">
+                <?php
+                    session_start();                    
+                    var_dump($_SESSION);
+                ?>
+            </div>
         </div>
     </main>
     <footer class="container-fluid bg-dark">

@@ -36,7 +36,19 @@
     $consulta->execute();
     $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);   
     if($resultado[0]["senha"]==$_POST['senha']){
-        header("Location:admin");
+        session_start();        
+        $resultado = session_unset();
+        if($resultado == true){            
+            session_regenerate_id();
+            $_SESSION['email']=$email;
+            $_SESSION['id']=session_id();
+            //echo "ok";
+            header("Location:admin");
+        }
+        else{
+            echo "problema no session_unset()";
+        }
+        
     }
     else{
         echo "

@@ -1,20 +1,12 @@
 <?php
     class Veiculo{
-
-        private $velocidade;
-        public static $qtdPneus = 4;        
-        
-        public static function soma($x,$y){
-            echo $x+$y;
-        } 
-        
-        public static function mult($x,$y){
-            echo $x*$y;
-        } 
-        
-        public static function getVelocidade()
+        private $velocidade;        
+        /**
+         * Get the value of velocidade
+         */ 
+        public function getVelocidade()
         {
-                return 100;
+                return $this->velocidade;
         }
         /**
          * Set the value of velocidade
@@ -23,9 +15,9 @@
          */ 
         public function setVelocidade($velocidade)
         {
-            if($velocidade > 0){
                 $this->velocidade = $velocidade;
-            }
+
+                return $this;
         }
         public function aumentarVelocidade($aumento){
             if($this->velocidade+=$aumento<=200){
@@ -43,8 +35,8 @@
             else{
                 $this->velocidade-=$reducao;
             }
+            
         }
-
         public function mudaDirecao($direcao){
             switch($direcao) {
                 case '0':
@@ -59,4 +51,35 @@
             }
         }
     }
+
+    class Moto extends Veiculo{
+        function trocaPneu($qtd){
+            if($qtd<=2){
+               echo $qtd."pneus trocados <br>"; 
+            }
+            else{
+                echo "Quantidade de Pneus Invalidos, não é um carro<br>";
+            }
+        }
+    
+    }
+
+    class Carro extends Veiculo{
+        function trocaPneu($qtd){
+            if($qtd<=5){
+               echo $qtd."pneus trocados <br>"; 
+            }
+            else{
+                echo "Quantidade de Pneus Invalidos, não é um carro<br>";
+            }
+        }
+    
+    }
+
+    $carro = new Carro();
+    $carro->trocaPneu(4);
+    $carro->setVelocidade(20);
+    echo $carro->getVelocidade();
+
+
 ?>

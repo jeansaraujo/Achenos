@@ -1,5 +1,6 @@
 <?php
 include_once('Veiculo.php');
+
 class Moto extends Veiculo{
     function trocaPneu($qtd){
         if($qtd<=2){
