@@ -11,7 +11,7 @@
                     <td class="text-center">Id</td>
                     <td class="text-center">Nome</td>
                     <td class="text-center">Email</td>
-                    <td class="text-center">Contato</td>
+                    <td class="text-center">telefone</td>
                     <td class="text-center">Serviço</td>
                 </tr>
             </thead>
