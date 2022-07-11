@@ -34,16 +34,19 @@
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="d-flex justify-content-center align-items-center">
                                 <li class="caixa-item">
-                                    <a class="caixa-link" href="#">Home</a>
+                                    <a class="caixa-link" href="home.php">Home</a>
                                 </li>
                                 <li class="caixa-item">
-                                    <a class="caixa-link" href="#">Prestador    </a>
+                                    <a class="caixa-link" href="#">Prestador</a>
                                 </li>
                                 <li class="caixa-item">
                                     <a class="caixa-link" href="#">Cadastro</a>
                                 </li>
                                 <li class="caixa-item">
                                     <a class="caixa-link">Login</a>
+                                </li>
+                                <li class="caixa-item">
+                                    <a class="caixa-link" href="avaliacoes.php">Avaliacoes</a>
                                 </li>
                             </ul>
                         </div>
@@ -75,6 +78,9 @@
                     case "login":
                         include('pages/login.php');
                         break;
+                    case "login":
+                        include('pages/avaliacoes.php');
+                        break;    
                     default:
                         include('pages/home.php');
                         break;
