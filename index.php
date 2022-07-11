@@ -118,13 +118,17 @@ color: white;
     <div class="row">
         
         <div class="col">
-        <p> Facebook: Achenos Brasil <br> Youtube: Achenos Brasil <br> Instagram: @achenos
+        <p> Facebook: Achenos Garanhuns <br> Youtube: Achenos Brasil <br> Instagram: @achenos
         </div>
         
-        <div class="col"><p>Contate-nos:<br> Email: contatoachenos.gmail.com<br>Central de atendimento: (87) 3014-1789
-        </p></div>
+        <div class="col"> 
+        <img src="assets/img/logo_achenos.jpg" alt="Logo da empresa" width="100px" height="70px" border-style: solid;>
+        </div>
         
-        
+        <div class="col">
+        <p>Contate-nos:<br> Email: contatoachenos.gmail.com<br>Central de atendimento: (87) 3014-1789
+        </p>
+        </div>
     </div>
         
 </footer>
