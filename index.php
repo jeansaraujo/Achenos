@@ -10,15 +10,16 @@
     <title>Achenos - O profissional que precisa</title>
 </head>
 <body>
-    <!--
+    
     <header class="d-flex justify-content-around mt-2">
         <a class="btn btn-lg btn-outline-primary" href="?page=home">Home</a>
         <a class="btn btn-lg btn-outline-primary" href="?page=prestador">Prestador</a>
         <a class="btn btn-lg btn-outline-primary" href="?page=busca">Busca</a>
         <a class="btn btn-lg btn-outline-primary" href="?page=cadastro">Cadastro</a>
         <a class="btn btn-lg btn-outline-primary" href="?page=login">Login</a>
+        <a class="btn btn-lg btn-outline-primary" href="?page=avaliacoes">Avaliações</a>
     </header>
-    -->
+
     <header class="container-fluid">
         <div class="logo d-flex justify-content-center">
             <img src="assets/img/logo_achenos.jpg">
@@ -78,7 +79,7 @@
                     case "login":
                         include('pages/login.php');
                         break;
-                    case "login":
+                    case "avaliacoes":
                         include('pages/avaliacoes.php');
                         break;    
                     default:
