@@ -1,5 +1,4 @@
 <?php
-
 class Handling{
     private $db;
 		public function __construct(){$this->db = new Database();}
@@ -156,7 +155,6 @@ class Handling{
 			$msg = "<div class='alert alert-danger'><strong>Ops, algo deu errado...</strong></div>";
 			return $msg;
 		}}
-		
 	public function userPersonalRegistration($data){
 		$name	  = $data['name'];
 		$name =  filter_var($name, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_STRIP_HIGH);
@@ -191,11 +189,5 @@ class Handling{
 			$msg = "<div class='alert alert-danger'><strong>Este e-mail já está cadastrado!</strong></div>";
 			return $msg;
 		}}
-
-		private function checkCad1($name,$email){
-			$check = 
-		}
 	}
-		
-
 ?>

@@ -1,11 +1,7 @@
 <?php 
   Session::checkSession();
-  $user = new Handling();
- 
-?>
-
-
- 
+  $user = new Handling(); 
+?> 
  <div class="container main-body bg-light">
   <div class="row">
    <div class="col-lg-8 col-lg-offset-2">

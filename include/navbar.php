@@ -15,14 +15,18 @@
                             <a class="nav-link" href="#">Prestador</a>
                         </li>
                         <?php
-                        if(empty(Session::get('id'))){ ?>
+                            if(empty(Session::get('id'))){ 
+                        ?>
                             <li class="caixa-item dropdown" role="button" style="margin-bottom: -1rem;">Trabalhe Conosco
                                 <div class="dropdown-content">
                                     <a role="button" class="" href="?page=login">Login</a>
                                     <a role="button" class="" href="?page=cadastro">Cadastro</a>
                                 </div>
                             </li>
-                            <?php }else{ ?>
+                        <?php 
+                                }
+                            else{ 
+                        ?>
                             <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="<?php echo Session::get('profilepic');?>" width="40" height="40" class="rounded-circle">
@@ -34,7 +38,9 @@
                             <li><a class="dropdown-item" href="?action=logout">Logout</a></li>
                             </ul>
                             </li>
-                        <?php }?>
+                        <?php 
+                        }
+                        ?>
                     </ul>
                 </div>
             </div>
