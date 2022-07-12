@@ -19,15 +19,6 @@ color: white;
 </style>
 </head>
 <body>
-    <!--
-    <header class="d-flex justify-content-around mt-2">
-        <a class="btn btn-lg btn-outline-primary" href="?page=home">Home</a>
-        <a class="btn btn-lg btn-outline-primary" href="?page=prestador">Prestador</a>
-        <a class="btn btn-lg btn-outline-primary" href="?page=busca">Busca</a>
-        <a class="btn btn-lg btn-outline-primary" href="?page=cadastro">Cadastro</a>
-        <a class="btn btn-lg btn-outline-primary" href="?page=login">Login</a>
-    </header>
-    -->
     <header class="container-fluid">
         <div class="logo d-flex justify-content-center">
             <img src="assets/img/logo_achenos.jpg">
@@ -35,7 +26,7 @@ color: white;
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container">
                 <div class="row">
-                    <div class="offset-4 col-4 offset-4">
+                    <div class="offset-1 col-10 offset-1">
                         <a class="navbar-brand" href="#"></a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -43,16 +34,22 @@ color: white;
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="d-flex justify-content-center align-items-center">
                                 <li class="caixa-item">
-                                    <a class="caixa-link" href="#">Home</a>
+                                    <a class="caixa-link" href="?page=home">Home</a>
                                 </li>
                                 <li class="caixa-item">
-                                    <a class="caixa-link" href="#">Prestador    </a>
+                                    <a class="caixa-link" href="?page=prestador">Prestador</a>
                                 </li>
                                 <li class="caixa-item">
-                                    <a class="caixa-link" href="#">Cadastro</a>
+                                    <a class="caixa-link" href="?page=busca">Busca</a>
                                 </li>
                                 <li class="caixa-item">
-                                    <a class="caixa-link">Login</a>
+                                    <a class="caixa-link" href="?page=cadastro">Cadastro</a>
+                                </li>
+                                <li class="caixa-item">
+                                    <a class="caixa-link" href="?page=login">Login</a>
+                                </li>
+                                <li class="caixa-item">
+                                    <a class="caixa-link" href="?page=avaliacoes">Avaliacoes</a>
                                 </li>
                             </ul>
                         </div>
@@ -84,6 +81,9 @@ color: white;
                     case "login":
                         include('pages/login.php');
                         break;
+                    case "avaliacoes":
+                        include('pages/avaliacoes.php');
+                        break;    
                     default:
                         include('pages/home.php');
                         break;
