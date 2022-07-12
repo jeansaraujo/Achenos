@@ -1,3 +1,14 @@
+<?php 
+    include_once 'config/config.php'; 
+    include_once 'lib/handling.php'; 
+    include_once 'lib/Session.php'; 
+    include_once 'lib/queryhandling.php';
+    include_once 'include/header.php';
+    Session::init(); 
+    if (isset($_GET['action']) && $_GET['action'] == 'logout') {
+        Session::destroy();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +18,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/script.js"></script>
     <title>Achenos - O profissional que precisa</title>
     <style>
  footer {
@@ -24,42 +36,64 @@ color: white;
             <img src="assets/img/logo_achenos.jpg">
         </div>
         <nav class="navbar navbar-expand-lg bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="offset-1 col-10 offset-1">
-                        <a class="navbar-brand" href="#"></a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="d-flex justify-content-center align-items-center">
-                                <li class="caixa-item">
-                                    <a class="caixa-link" href="?page=home">Home</a>
-                                </li>
-                                <li class="caixa-item">
-                                    <a class="caixa-link" href="?page=prestador">Prestador</a>
-                                </li>
-                                <li class="caixa-item">
-                                    <a class="caixa-link" href="?page=busca">Busca</a>
-                                </li>
-                                <li class="caixa-item">
-                                    <a class="caixa-link" href="?page=cadastro">Cadastro</a>
-                                </li>
-                                <li class="caixa-item">
-                                    <a class="caixa-link" href="?page=login">Login</a>
-                                </li>
-                                <li class="caixa-item">
-                                    <a class="caixa-link" href="?page=avaliacoes">Avaliacoes</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div> 
-            </div>
+          <div class="container">
+              <div class="row">
+                  <div class="offset-1 col-10 offset-1">
+                      <a class="navbar-brand" href="#"></a>
+                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                          <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <div class="collapse navbar-collapse" id="navbarNav">
+                          <ul class="d-flex justify-content-center align-items-center">
+                              <li class="caixa-item">
+                                  <a class="caixa-link" href="?page=home">Home</a>
+                              </li>
+                              <li class="caixa-item">
+                                  <a class="caixa-link" href="?page=prestador">Prestador</a>
+                              </li>
+                              <li class="caixa-item">
+                                  <a class="caixa-link" href="?page=busca">Busca</a>
+                              </li>                                                     
+                              <li class="caixa-item">
+                                  <a class="caixa-link" href="?page=avaliacoes">Avaliacoes</a>
+                              </li>
+                              <?php
+                                  if(empty(Session::get('id'))){ 
+                              ?>
+                                  <div class="dropdown">
+                                      <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                          Trabalhe Conosco
+                                      </button>
+                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                          <li><a class="dropdown-item" href="?page=login">Login</a></li>
+                                          <li><a class="dropdown-item" href="?page=cadastro">Cadastro</a></li>                                        
+                                      </ul>
+                                  </div>                                
+                              <?php 
+                                  }
+                                  else
+                                  { 
+                              ?>
+                                  <div class="dropdown">
+                                      <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                          Perfil
+                                      </button>
+                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                          <li><a class="dropdown-item" href="?page=config">Configurações</a></li>
+                                          <li><a class="dropdown-item" href="?action=logout">Logout</a></li>                                        
+                                      </ul>
+                                  </div> 
+                              <?php 
+                              }
+                              ?>
+                          </ul>
+                      </div>
+                  </div>
+              </div> 
+          </div>
         </nav>
         <div class="barra">            
-        </div>
-           
+        </div>           
     </header>
     <main class="container">        
         <?php
