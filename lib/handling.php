@@ -1,9 +1,26 @@
 <?php
+//ultima hora mexida 18:35
 class Handling{
     private $db;
-		public function __construct(){$this->db = new Database();}
-		private function __clone(){}
-		public function userRegistration($data){
+	public function __construct(){$this->db = new Database();}
+	private function __clone(){}
+	private function insertDB($table,$params){
+			$sql = "INSERT INTO $table (?) VALUES (?)";
+			$query = $this->db->pdo->prepare($sql);
+			$query->bindParam('ss',$params,$params);
+			$result = $query->execute();
+			return $result;
+			}
+
+	private function updateDB($table,$params,$id){
+			$sql = "UPDATE $table SET ? = ? WHERE id = ?";
+			$query = $this->db->pdo->prepare($sql);
+			$query->bindValue('sss',$params,$params,$id);
+			$result = $query->execute();
+			return $result;
+		 }
+
+	public function userRegistration($data){
 			$name	  = $data['name'];
 			$name =  filter_var($name, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_STRIP_HIGH);
 			$username = $data['username'];
@@ -11,44 +28,75 @@ class Handling{
 			$email	  =	$data['email'];
 			$password = $data['password'];
 			$password = md5($data['password']);
-			if ($this->checkUsername($username)){
-				if ($this->checkEmail($email)){
-					if ($this->tablePessoalFill($username,$name)){
-						if ($this->tableProfesionalFill($username)){
-							if ($this->tableScholarFill($username)){
-								unset($sql);unset($query);
-								$sql = "INSERT INTO usuarios (username,email,password) VALUES (:username,:email,:password)";
-								$query = $this->db->pdo->prepare($sql);
-								$query->bindValue(':username',$username);
-								$query->bindValue(':email',$email);
-								$query->bindValue(':password',$password);
-								$result = $query->execute();
-								if ($result) {
-									$msg = "<div class='alert alert-success'><strong>Cadastrado com sucesso!</strong></div>";
+			$confirm = $data['confirmpassword'];
+			$confirm = md5($data['confirmpassword']);
+			if ($this->checkPassword($password,$confirm)){
+				if ($this->checkUsername($username)){
+					if ($this->checkEmail($email)){
+						$table = "usuarios";
+						unset($params);
+						$params = $username;
+						$result = $this->insertDB($table,$params);
+						if($result){
+							unset($params);
+							$params = $email;
+							$result = $this->insertDB($table,$params);
+							if($result){
+								unset($params);
+								$params = $password;
+								$result = $this->insertDB($table,$params);
+								$complete = $this->tablePessoalFill($username,$name);
+								if($complete){
+									$complete = $this->tableProfesionalFill($username);
+									if($complete){
+										$complete = $this->tableScholarFill($username);
+										if($complete){
+											$msg = "<div class='alert alert-success'><strong>Cadastrado com sucesso, redirecionando para a página de login.</strong></div>";
+											return $msg;
+											header('Location:index.php?page=login');
+										 }else{
+											$msg = "<div class='alert alert-danger'><strong>Ops, algo deu errado...</strong></div>";;
+											return $msg;
+									 	 }
+									 }else{
+										$msg = "<div class='alert alert-danger'><strong>Ops, algo deu errado...</strong></div>";;
+										return $msg;
+									 }
+								 }else{
+									$msg = "<div class='alert alert-danger'><strong>Ops, algo deu errado...</strong></div>";;
 									return $msg;
-								}}else{
-								$msg = "<div class='alert alert-danger'><strong>Ops, algo deu errado...</strong></div>";;
-								return $msg;
-								}
-							}else{
-								$msg = "<div class='alert alert-danger'><strong>Ops, algo deu errado...</strong></div>";;
-								return $msg;
-							}
-						}else{
+								 }	
+						 }else{
 							$msg = "<div class='alert alert-danger'><strong>Ops, algo deu errado...</strong></div>";;
 							return $msg;
-							}
-					}else{
+						 }
+					 }else{
 						$msg = "<div class='alert alert-danger'><strong>Este e-mail já está cadastrado!</strong></div>";
 						return $msg;
-						}
-				}else{
+					 }						 
+					 }else{
+						$msg = "<div class='alert alert-danger'><strong>Ops, algo deu errado...</strong></div>";;
+						return $msg;
+					 }
+				 }else{
 					$msg = "<div class='alert alert-danger'><strong>Este usuário já está cadastrado!</strong></div>";
-					return $msg;
-				}}
+					return $msg;}
+			 }else{
+				$msg = "<div class='alert alert-danger'><strong>As senhas não conferem!</strong></div>";
+				return $msg;
+			 }
+		 }
 
-		private function checkEmail($email){
-				  $sql 	= "SELECT email FROM usuarios WHERE email= :email";
+
+	private function checkPassword($password,$confirm){
+			if ($password === $confirm){
+				return true;
+			}else{
+				return false;
+			}
+			}
+	private function checkEmail($email){
+				  $sql 	= "SELECT email FROM usuarios WHERE email=:email";
 				  $query = $this->db->pdo->prepare($sql);
 				  $query->bindValue(':email',$email);
 				  $query->execute();
@@ -57,8 +105,8 @@ class Handling{
 				  }else{
 					  return false;
 				  }}
-		private function checkUsername($username){
-			$sql 	= "SELECT email FROM usuarios WHERE username=:username";
+	private function checkUsername($username){
+			$sql 	= "SELECT username FROM usuarios WHERE username=:username";
 			$query = $this->db->pdo->prepare($sql);
 			$query->bindValue(':username',$username);
 			$query->execute();
@@ -67,9 +115,10 @@ class Handling{
 			}else{
 				return false;
 			}}
-		private function tablePessoalFill ($username,$name){
+	private function tablePessoalFill ($username,$name){
 				$sql = "INSERT INTO pessoal_info (name,sobrenome,contato1,contato2,birthday,pais,estado,cidade,profilepic,bio) VALUES (:name,:sobrenome,:contato1,:contato2,:birthday,:pais,:estado,:cidade,:profilepic,:bio)";
 				$query = $this->db->pdo->prepare($sql);
+				$profilepic_path = "/assets/img/default_profile.png";
 				$query->bindValue(':username',$username);
 				$query->bindParam(':name',$name);
 				$query->bindValue(':sobrenome','');
@@ -79,9 +128,10 @@ class Handling{
 				$query->bindValue(':pais','');
 				$query->bindValue(':estado','');
 				$query->bindValue(':cidade','');
-				$query->bindValue(':profilepic','');
+				$query->bindValue(':profilepic',$profilepic_path);
 				$query->bindValue(':bio','');
 				$query->execute();
+				unset($sql);
 				$sql = "SELECT username FROM pessoal_info WHERE username=:username";
 				$query->bindValue(':username',$username);
 				$query->execute();
@@ -89,13 +139,13 @@ class Handling{
 				$query2 = $this->db->pdo->prepare($sql2);
 				$query2->bindValue(':username2',$username);
 				$query2->execute();
-				if($query->rowCount() > 1 && $query === $query2){
+				if($query->rowCount() > 1 && $query2->rowCount() > 1){
 					return true;
 				}else{
 					return false;
 				}}
 		
-		private function tableProfesionalFill ($username){
+	private function tableProfesionalFill ($username){
 			$sql = "INSERT INTO profissional_info (servico1,servico2,nome_do_cargo,work_bio,desde,ate) VALUES (:servico1,:servico2,:nome_do_cargo,:work_bio,:desde,:ate)";
 			$query = $this->db->pdo->prepare($sql);
 			$query->bindValue(':servico1','');
@@ -118,7 +168,7 @@ class Handling{
 				return false;
 			}}
 
-		private function tableScholarFill ($username){
+	private function tableScholarFill ($username){
 			$sql = "INSERT INTO escolaridade_info (username) VALUES (:username)";
 			$query = $this->db->pdo->prepare($sql);
 			$query->bindValue(':username',$username);
@@ -137,7 +187,7 @@ class Handling{
 			}}
 					  
 
-		private function getLoginUser($email,$password){
+	private function getLoginUser($email,$password){
 			$sql = "SELECT * FROM usuarios WHERE email=:email AND password=:password ";
 			$query =  $this->db->pdo->prepare($sql);
 			$query->bindValue(':email',$email);
@@ -147,7 +197,7 @@ class Handling{
 			return $result;
 			}
 
-		public function userLogin($data){
+	public function userLogin($data){
 			$email = $data['email'];
 			$password = md5($data['password']);
 			$result = $this->getLoginUser($email,$password);
@@ -164,7 +214,7 @@ class Handling{
 				return $msg;
 			}}
 
-		private function getUpdateName($name,$id){
+	private function getUpdateName($name,$id){
 			$sql = "UPDATE usuarios SET name=:name WHERE id=:id";
 			$query = $this->db->pdo->prepare($sql);
 			$query->bindParam(':name',$name);
@@ -173,7 +223,7 @@ class Handling{
 			return $result;
 			}	
 
-		public function updateName($data){
+	public function updateName($data){
 			$name = $data['name'];
 			$name = filter_var($name, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_STRIP_HIGH);
 			$id = $data['id'];
@@ -192,7 +242,7 @@ class Handling{
 				return $msg;
 			}}
 
-		private function getUpdateEmail($id,$email){
+	private function getUpdateEmail($id,$email){
 			$sql = "UPDATE usuarios SET email=:email WHERE id=:id";
 			$query = $this->db->pdo->prepare($sql);
 			$query->bindValue(':email',$email);
@@ -201,7 +251,7 @@ class Handling{
 			return $result;
 			}
 
-		public function updateEmail($data){
+	public function updateEmail($data){
 			$id = $data['username'];
 			$email	  =	$data['email'];
 			$result = $this->getUpdateEmail($id,$email);
@@ -219,23 +269,32 @@ class Handling{
 				return $msg;
 			}}
 
-		private function getUpdatePassword($id,$old_password,$password){
-			$check = "SELECT * FROM usuarios WHERE id=:id AND password=:old_password";
-			$checking = $this->db->pdo->prepare($check);
-			$checking->bindValue(':id',$id);
-			$checking->bindValue(':old_password',$old_password);
-			$checked = $checking->execute();
+	private function getUpdatePassword($id,$old_password,$password){
+			$checked = $this->checkOldPassword($id,$old_password);
 			if ($checked){
-			$sql = "UPDATE usuarios SET password=:password WHERE id=:id";
+				$sql = "UPDATE usuarios SET password=:password WHERE id=:id";
+				$query = $this->db->pdo->prepare($sql);
+				$query->bindValue(':id',$id);
+				$query->bindValue(':password',$password);
+				$result = $query->execute();
+				return $result;
+			 } else {
+			 }
+		 }
+	private function checkOldPassword($id,$old_password){
+			$sql = "SELECT * FROM usuarios WHERE id=:id AND password=:old_password";
 			$query = $this->db->pdo->prepare($sql);
 			$query->bindValue(':id',$id);
-			$query->bindValue(':password',$password);
-			$result = $query->execute();
-			return $result;
-			} else {
-			}}
+			$query->bindValue(':old_password',$old_password);
+			$checked = $query->execute();
+			if($checked){
+				return true;
+			}else{
+				return false;
+			}
+		 }
 
-		public function updatePassword($data){
+	public function updatePassword($data){
 			$id = $data['id'];
 			$old_password = $data['old_password'];
 			$old_password = md5($old_password);
@@ -250,7 +309,7 @@ class Handling{
 				return $msg;
 			}}
 			
-		public function userPersonalRegistration($data){
+	public function userPersonalRegistration($data){
 			$id 		= $data['id'];
 			$name	  	= $data['name'];
 			$name 		= filter_var($name, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_STRIP_HIGH);
@@ -263,46 +322,66 @@ class Handling{
 			$cidade 	= $data['cidade'];
 			$profilepic = $data['profilepic'];
 			$bio 		= $data['bio'];
-			if ($this->checkCad2($id)){
+			if ($this->checkCad($id)){
 				unset($sql);unset($query);
-				$sql = "INSERT INTO pessoal_info (sobrenome,contato,pais,estado,cidade,bio) VALUES (:sobrenome,:contato,:pais,:estado,:cidade,:bio)";
-				$query = $this->db->pdo->prepare($sql);
-				$query->bindParam(':sobrenome',$sobrenome);
-				$query->bindValue(':contato',$contato);
-				$query->bindValue(':pais',$pais);
-				$query->bindValue(':estado',$estado);
-				$query->bindValue(':cidade',$cidade);
-				$query->bindValue(':bio',$bio);
-				$result = $query->execute();
-				if ($result) {
-					$msg = "<div class='alert alert-success'><strong>Cadastrado atualizado sucesso!</strong></div>";
+				$table = "pessoal_info";
+				if(isset($name)){
+					$params = $name;
+					$result = $this->updateDB($table,$params,$id);
+				}else{}
+				if(isset($sobrenome)){
+					$params = $sobrenome;
+					$result = $this->updateDB($table,$params,$id);
+				}else{}
+				if(isset($contato)){
+					$params = $contato;
+					$result = $this->updateDB($table,$params,$id);
+				}else{}
+				if(isset($pais)){
+					$params = $pais;
+					$result = $this->updateDB($table,$params,$id);
+				}else{}
+				if(isset($estado)){
+					$params = $estado;
+					$result = $this->updateDB($table,$params,$id);
+				}else{}
+				if(isset($cidade)){
+					$params = $cidade;
+					$result = $this->updateDB($table,$params,$id);
+				}else{}
+				if(isset($bio)){
+					$params = $bio;
+					$result = $this->updateDB($table,$params,$id);
+				}else{}
+				if(isset($email)){
+					$table = "usuarios";
+					$params = $email;
+					$result = $this->updateDB($table,$params,$id);
+				}else{}
+				if($result){
+					$msg = "<div class='alert alert-success'><strong>Dados atualizados com sucesso!</strong></div>";
 					return $msg;
-				}else{
-					$msg = "<div class='alert alert-danger'><strong>Ops, algo deu errado...</strong></div>";
-					return $msg;
+					header('Location:index.php?page=perfil');
 				}
-			}else{
-				$msg = "<div class='alert alert-danger'><strong>Este e-mail já está cadastrado!</strong></div>";
-				return $msg;
 			}}
 
-		private function checkCad2($id){
-			$sql 	= "SELECT name,email FROM usuarios WHERE id=:id";
-			$query = $this->db->pdo->prepare($sql);
+	private function checkCad($id){
+			$sql 	= "SELECT username FROM usuarios WHERE id=:id";
+			$query 	= $this->db->pdo->prepare($sql);
 			$query->bindValue(':id',$id);
 			$query->execute();
 			if ($query->rowCount() > 1) {
 				return true;
 			}else{
 				return false;
-			}}
+			}
+		 }
+	}//falta atualizar a página do perfil profissional e do perfil escolar
+class pictureHandling{
+	private $db;
+	public function __construct(){$this->db = new Database();}
+	private function __clone(){}
+	//ainda vou mexer aqui
 
-		
-
-
-
-
-
-	}	
-
+}
 ?>
