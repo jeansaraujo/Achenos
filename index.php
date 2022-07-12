@@ -1,3 +1,13 @@
+<?php 
+    include_once 'config/config.php'; 
+    include_once 'lib/handling.php'; 
+    include_once 'lib/Session.php'; 
+    include_once 'lib/queryhandling.php';    
+    Session::init(); 
+    if (isset($_GET['action']) && $_GET['action'] == 'logout') {
+        Session::destroy();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,51 +17,21 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/script.js"></script>
     <title>Achenos - O profissional que precisa</title>
+    <style>
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #00407d;
+            color: white;
+        }               
+    </style>
 </head>
 <body>
-    <header class="container-fluid">
-        <div class="logo d-flex justify-content-center">
-            <img src="assets/img/logo_achenos.jpg">
-        </div>
-        <nav class="navbar navbar-expand-lg bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="offset-1 col-10 offset-1">
-                        <a class="navbar-brand" href="#"></a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="d-flex justify-content-center align-items-center">
-                                <li class="caixa-item">
-                                    <a class="caixa-link" href="?page=home">Home</a>
-                                </li>
-                                <li class="caixa-item">
-                                    <a class="caixa-link" href="?page=prestador">Prestador</a>
-                                </li>
-                                <li class="caixa-item">
-                                    <a class="caixa-link" href="?page=busca">Busca</a>
-                                </li>
-                                <li class="caixa-item">
-                                    <a class="caixa-link" href="?page=cadastro">Cadastro</a>
-                                </li>
-                                <li class="caixa-item">
-                                    <a class="caixa-link" href="?page=login">Login</a>
-                                </li>
-                                <li class="caixa-item">
-                                    <a class="caixa-link" href="?page=avaliacoes">Avaliacoes</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div> 
-            </div>
-        </nav>
-        <div class="barra">            
-        </div>
-           
-    </header>
+    <?php
+        include_once 'include/header.php';
+    ?>    
     <main class="container">        
         <?php
             if(isset($_GET['page'])){
@@ -85,5 +65,37 @@
             }            
         ?>
     </main>
+    <footer>
+        <div class="row">
+            <div class="col"> 
+                <a class="btn  btn-outline-light" href="?page=home">Home</a>
+            </div>
+            <div class="col">
+                <a class="btn  btn-outline-light" href="?page=prestador">Prestador</a>        
+            </div>
+            <div class="col">
+                <a class="btn  btn-outline-light" href="?page=cadastro">Cadastro</a>
+            </div>
+            <div class="col">
+                <a class="btn  btn-outline-light" href="?page=login">Login</a>
+            </div>
+            <div class="col">
+                <a class="btn  btn-outline-light" href="?page=sobrenos">Sobre nós</a>
+            </div>
+        </div>
+        <div class="row">        
+            <div class="col">
+                <p> Facebook: Achenos Garanhuns <br> Youtube: Achenos Brasil <br> Instagram: @achenos
+            </div>        
+            <div class="col"> 
+                <img src="assets/img/logo_achenos.jpg" alt="Logo da empresa" width="100px" height="70px" border-style: solid;>
+            </div>        
+            <div class="col">
+                <p>
+                    Contate-nos:<br> Email: contatoachenos.gmail.com<br>Central de atendimento: (87) 3014-1789
+                </p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
