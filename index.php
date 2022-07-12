@@ -20,6 +20,9 @@
                     case "login":
                         include('pages/login.php');
                         break;
+                    case "perfil":
+                        include('pages/perfil.php');
+                        break;
                     default:
                         include('pages/home.php');
                         break;

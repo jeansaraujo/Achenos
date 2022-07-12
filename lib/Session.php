@@ -29,7 +29,7 @@
 		}
 		public static function checkLogin(){
 			if (self::get('login') == true ) {
-				
+				header('Location:index.php?page=perfil.php');
 			}
 		}
 		public static function destroy(){
