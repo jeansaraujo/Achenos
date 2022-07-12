@@ -1,37 +1,38 @@
+<?php $user = new Handling();
+      
+	if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])){
+        if((isset($_POST['password']) == (isset($_POST['confirmpassword'])))){
+		$userReg	= $user->userRegistration($_POST);
+	}}
+?>
 <div class="row">
     <div class="col">
-        <p class="h2 text-end p-3 text-primary">Cadastro de Prestadores</p>
+        <p class="h2 text-end p-3 text-primary">Cadastro</p>
     </div>
+    <?php
+        if (isset($userReg)) {
+            echo $userReg;
+        }
+    ?>
 </div>
 <div class="row">
     <div class="offset-3 col-6 justify-content-center mt-1">
-        <form method="POST">
-            <input type="text" class="form-control" name="nome" placeholder="Nome" required>
-            <input type="email" class="form-control" name="email" placeholder="Email" required>
-            <input type="password" class="form-control" name="senha" placeholder="Senha" required>
-            <input type="text" class="form-control" name="servico" placeholder="Serviço" required>
-            <input type="tel" class="form-control" name="contato" placeholder="Contato" required>
-            <button class="btn btn-outline-primary btn-lg mt-2">
+        <form method="POST" action="" autocomplete="off">
+            <input type="text" class="form-control" name="name" id="name" placeholder="Nome">
+            <input type="text" class="form-control" name="username" id="username" placeholder="Nome de Usuário">
+                <div id="element01"><span class="help-block">Nome de usuário não pode conter espaços.</span></div>
+            <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+            <div id="element02"><span class="text-success">Endereço de email válido!</span></div>
+            <div id="element03"><span class="text-danger">Endereço de email inválido!</span></div>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Senha">
+            <input type="password" class="form-control" name="confirmpassword" id="confirmpassword" placeholder="Confirme a senha">
+            <div id="element04"><span class="text-success">As senhas coincidem!</span></div>
+            <div id="element05"><span class="text-danger">As senhas não coincidem!</span></div><br>
+            <button type="submit" name="register" class="btn btn-outline-primary btn-lg mt-2">
                 Cadastrar
             </button>
         </form>
     </div>
 </div>
-
-<?php
-    if(isset($_POST['nome'])&isset($_POST['email'])&isset($_POST['senha'])&isset($_POST['servico'])&isset($_POST['contato'])){
-        $conexao = new PDO("mysql:dbname=senac;host=localhost","root","");
-        $insere = $conexao->prepare("INSERT INTO prestador(nome,email,senha,servico,contato) VALUES(:NOME,:EMAIL,:SENHA,:SERVICO,:CONTATO)");
-        $nome = $_POST['nome'];
-        $email = $_POST['email'];
-        $senha = $_POST['senha'];
-        $servico = $_POST['servico'];
-        $contato = $_POST['contato'];       
-        $insere->bindParam(":NOME",$nome);
-        $insere->bindParam(":EMAIL",$email);
-        $insere->bindParam(":SENHA",$senha);
-        $insere->bindParam(":SERVICO",$servico);
-        $insere->bindParam(":CONTATO",$contato);
-        $insere->execute();        
-    }
-?>
+</body>
+</html>
