@@ -1,9 +1,8 @@
 <?php
-
 class Database{
     public $pdo; 
     private $dbHost = "localhost";
-    private $dbName ="achenos";
+    private $dbName ="senac";
     private $dbUser ="root";
     private $dbPass ="";
     public function __construct(){
