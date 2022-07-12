@@ -26,6 +26,4 @@
             <a href="index.php"><img src="assets/img/logo_achenos.jpg"></a>
         </div>
         <?php include_once 'navbar.php';?>
-        
-           
     </header>

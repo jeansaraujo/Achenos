@@ -1,5 +1,5 @@
 <?php
-	 Session::checkLogin();
+	Session::checkLogin();
 	 
 	$user = new Handling();
 	
@@ -8,7 +8,6 @@
 		
 	}
 	?>
-
 <div class="row">
     <div class="col">
         <p class="text-primary h2 text-end mt-2">
