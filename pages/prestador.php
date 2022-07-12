@@ -9,7 +9,7 @@
             <thead class="table-dark">
                 <tr>
                     <td class="text-center">Id</td>
-                    <td class="text-center">Nome completo</td>
+                    <td class="text-center">Nome</td>
                     <td class="text-center">Email</td>
                     <td class="text-center">Contato</td>
                     <td class="text-center">Serviço</td>
