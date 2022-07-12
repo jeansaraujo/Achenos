@@ -10,10 +10,10 @@
         <p class="h2 text-end p-3 text-primary">Cadastro</p>
     </div>
     <?php
-                        if (isset($userReg)) {
-                          echo $userReg;
-                        }
-                        ?>
+        if (isset($userReg)) {
+            echo $userReg;
+        }
+    ?>
 </div>
 <div class="row">
     <div class="offset-3 col-6 justify-content-center mt-1">
