@@ -28,7 +28,7 @@
                             <img src="<?php echo Session::get('profilepic');?>" width="40" height="40" class="rounded-circle">
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                            <li><a class="dropdown-item" href="?tab=perfil">Perfil</a></li>
+                            <li><a class="dropdown-item" href="?page=perfil">Perfil</a></li>
                             <li><a class="dropdown-item" href="security/index.php">Configurações</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="?action=logout">Logout</a></li>
