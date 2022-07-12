@@ -89,10 +89,10 @@ li>a{
     border-radius: 15px 15px 5px 5px;
     color: white;
 }
-form>div{
+#form>div{
     display: none;
 }
-form>div>span{
+#form>div>span{
     color: rgb(184, 183, 183);
     font-size: small;
     padding-left: 2rem;

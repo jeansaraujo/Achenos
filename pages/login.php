@@ -1,4 +1,3 @@
-
 <?php
 	 Session::checkLogin();
 	 
