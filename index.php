@@ -95,42 +95,36 @@ color: white;
         ?>
     </main>
     <footer>
-    <div class="row">
-        <div class="col"> 
-        <a class="btn  btn-outline-light" href="?page=home">Home</a>
-        
-       
-    </div>
-        <div class="col">
-        <a class="btn  btn-outline-light" href="?page=prestador">Prestador</a>
-</p></div>
-        <div class="col">
-            <a class="btn  btn-outline-light" href="?page=cadastro">Cadastro</a>
-    </div>
-        <div class="col">
-        <a class="btn  btn-outline-light" href="?page=login">Login</a>
+        <div class="row">
+            <div class="col"> 
+                <a class="btn  btn-outline-light" href="?page=home">Home</a>
+            </div>
+            <div class="col">
+                <a class="btn  btn-outline-light" href="?page=prestador">Prestador</a>        
+            </div>
+            <div class="col">
+                <a class="btn  btn-outline-light" href="?page=cadastro">Cadastro</a>
+            </div>
+            <div class="col">
+                <a class="btn  btn-outline-light" href="?page=login">Login</a>
+            </div>
+            <div class="col">
+                <a class="btn  btn-outline-light" href="?page=sobrenos">Sobre nós</a>
+            </div>
         </div>
-        <div class="col">
-        <a class="btn  btn-outline-light" href="?page=sobrenos">Sobre nós</a>
+        <div class="row">        
+            <div class="col">
+                <p> Facebook: Achenos Garanhuns <br> Youtube: Achenos Brasil <br> Instagram: @achenos
+            </div>        
+            <div class="col"> 
+                <img src="assets/img/logo_achenos.jpg" alt="Logo da empresa" width="100px" height="70px" border-style: solid;>
+            </div>        
+            <div class="col">
+                <p>
+                    Contate-nos:<br> Email: contatoachenos.gmail.com<br>Central de atendimento: (87) 3014-1789
+                </p>
+            </div>
         </div>
-    </div>
-    
-    <div class="row">
-        
-        <div class="col">
-        <p> Facebook: Achenos Garanhuns <br> Youtube: Achenos Brasil <br> Instagram: @achenos
-        </div>
-        
-        <div class="col"> 
-        <img src="assets/img/logo_achenos.jpg" alt="Logo da empresa" width="100px" height="70px" border-style: solid;>
-        </div>
-        
-        <div class="col">
-        <p>Contate-nos:<br> Email: contatoachenos.gmail.com<br>Central de atendimento: (87) 3014-1789
-        </p>
-        </div>
-    </div>
-        
-</footer>
+    </footer>
 </body>
 </html>
