@@ -1,29 +1,64 @@
-<?php 	Session::init(); if (isset($_GET['action']) && $_GET['action'] == 'logout') {Session::destroy();}?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="assets/js/script.js"></script>
-    <title>Achenos - O profissional que precisa</title>
-</head>
-<body>
-    <!--
-    <header class="d-flex justify-content-around mt-2">
-        <a class="btn btn-lg btn-outline-primary" href="?page=home">Home</a>
-        <a class="btn btn-lg btn-outline-primary" href="?page=prestador">Prestador</a>
-        <a class="btn btn-lg btn-outline-primary" href="?page=busca">Busca</a>
-        <a class="btn btn-lg btn-outline-primary" href="?page=cadastro">Cadastro</a>
-        <a class="btn btn-lg btn-outline-primary" href="?page=login">Login</a>
-    </header>
-    -->
-    <header class="container-fluid">
-        <div class="logo d-flex justify-content-center">
-            <a href="index.php"><img src="assets/img/logo_achenos.jpg"></a>
+<header class="container-fluid">
+    <div class="logo d-flex justify-content-center">
+        <img src="assets/img/logo_achenos.jpg">
+    </div>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="offset-1 col-10 offset-1">
+                    <a class="navbar-brand" href="#"></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="d-flex justify-content-center align-items-center">
+                            <li class="caixa-item">
+                                <a class="caixa-link" href="?page=home">Home</a>
+                            </li>
+                            <li class="caixa-item">
+                                <a class="caixa-link" href="?page=prestador">Prestador</a>
+                            </li>
+                            <li class="caixa-item">
+                                <a class="caixa-link" href="?page=busca">Busca</a>
+                            </li>                                                     
+                            <li class="caixa-item">
+                                <a class="caixa-link" href="?page=avaliacoes">Avaliacoes</a>
+                            </li>
+                            <?php
+                                if(empty(Session::get('id'))){ 
+                            ?>
+                                <div class="dropdown">
+                                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Trabalhe Conosco
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item" href="?page=login">Login</a></li>
+                                        <li><a class="dropdown-item" href="?page=cadastro">Cadastro</a></li>                                        
+                                    </ul>
+                                </div>                                
+                            <?php 
+                                }
+                                else
+                                { 
+                            ?>
+                                <div class="dropdown">
+                                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Perfil
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item" href="?page=config">Configurações</a></li>
+                                        <li><a class="dropdown-item" href="?action=logout">Logout</a></li>                                        
+                                    </ul>
+                                </div> 
+                            <?php 
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+            </div> 
         </div>
-        <?php include_once 'navbar.php';?>
-    </header>
+    </nav>
+    <div class="barra">            
+    </div>
+</header>       
