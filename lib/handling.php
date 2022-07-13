@@ -11,7 +11,12 @@ class Handling{
 			$result = $query->execute();
 			return $result;
 			}
-
+	public function selectInto(){
+		$table = "usuarios_fetch";
+		$sql = "SELECT name INTO $table FROM pessoal_info UNION ALL SELECT username INTO .$table. FROM usuarios UNION ALL SELECT email INTO .$table. FROM usuarios";
+  		$query = $this->db->pdo->prepare($sql);
+  		$query->execute();
+	}
 	private function updateDB($table,$params,$id){
 			$sql = "UPDATE $table SET ? = ? WHERE id = ?";
 			$query = $this->db->pdo->prepare($sql);
@@ -20,7 +25,7 @@ class Handling{
 			return $result;
 		 }
 
-	public function userRegistration($data){
+		 public function userRegistration($data){
 			$name	  = $data['name'];
 			$name =  filter_var($name, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_STRIP_HIGH);
 			$username = $data['username'];
@@ -30,62 +35,30 @@ class Handling{
 			$password = md5($data['password']);
 			$confirm = $data['confirmpassword'];
 			$confirm = md5($data['confirmpassword']);
-			if ($this->checkPassword($password,$confirm)){
-				if ($this->checkUsername($username)){
-					if ($this->checkEmail($email)){
-						$table = "usuarios";
-						unset($params);
-						$params = $username;
-						$result = $this->insertDB($table,$params);
-						if($result){
-							unset($params);
-							$params = $email;
-							$result = $this->insertDB($table,$params);
-							if($result){
-								unset($params);
-								$params = $password;
-								$result = $this->insertDB($table,$params);
-								$complete = $this->tablePessoalFill($username,$name);
-								if($complete){
-									$complete = $this->tableProfesionalFill($username);
-									if($complete){
-										$complete = $this->tableScholarFill($username);
-										if($complete){
-											$msg = "<div class='alert alert-success'><strong>Cadastrado com sucesso, redirecionando para a página de login.</strong></div>";
-											return $msg;
-											header('Location:index.php?page=login');
-										 }else{
-											$msg = "<div class='alert alert-danger'><strong>Ops, algo deu errado...</strong></div>";;
-											return $msg;
-									 	 }
-									 }else{
-										$msg = "<div class='alert alert-danger'><strong>Ops, algo deu errado...</strong></div>";;
-										return $msg;
-									 }
-								 }else{
-									$msg = "<div class='alert alert-danger'><strong>Ops, algo deu errado...</strong></div>";;
-									return $msg;
-								 }	
-						 }else{
-							$msg = "<div class='alert alert-danger'><strong>Ops, algo deu errado...</strong></div>";;
-							return $msg;
-						 }
-					 }else{
-						$msg = "<div class='alert alert-danger'><strong>Este e-mail já está cadastrado!</strong></div>";
-						return $msg;
-					 }						 
-					 }else{
-						$msg = "<div class='alert alert-danger'><strong>Ops, algo deu errado...</strong></div>";;
-						return $msg;
-					 }
-				 }else{
-					$msg = "<div class='alert alert-danger'><strong>Este usuário já está cadastrado!</strong></div>";
-					return $msg;}
-			 }else{
+			$checkpass = $password === $confirm;
+			if($checkpass){
+				$sql = "INSERT INTO usuarios (username,email,password) VALUES (? ,? ,? )";
+				$query = $this->db->pdo->prepare($sql);
+				$query->bindValue(1,$username);
+				$query->bindValue(2,$email);
+				$query->bindValue(3,$password);
+				$result = $query->execute();
+				if ($result) {
+					$this->tablePessoalFill($username,$name);
+					$this->tableProfesionalFill($username);
+					$this->tableScholarFill($username);
+					$msg = "<div class='alert alert-success'><strong>Cadastrado com sucesso!</strong></div>";
+					return $msg;
+					header('Location:index.php?page=login');
+				}else{
+					$msg = "<div class='alert alert-danger'><strong>Ops, algo deu errado...</strong></div>";
+					return $msg;
+				}
+			}else{
 				$msg = "<div class='alert alert-danger'><strong>As senhas não conferem!</strong></div>";
 				return $msg;
 			 }
-		 }
+		}
 
 
 	private function checkPassword($password,$confirm){
@@ -116,38 +89,29 @@ class Handling{
 				return false;
 			}}
 	private function tablePessoalFill ($username,$name){
-				$sql = "INSERT INTO pessoal_info (name,sobrenome,contato1,contato2,birthday,pais,estado,cidade,profilepic,bio) VALUES (:name,:sobrenome,:contato1,:contato2,:birthday,:pais,:estado,:cidade,:profilepic,:bio)";
+				unset($sql); unset($query);
+				$sql = "INSERT INTO pessoal_info (username,name,sobrenome,contato1,contato2,birthday,pais,estado,cidade,profilepic,bio) VALUES (:username,:name,:sobrenome,:contato1,:contato2,:birthday,:pais,:estado,:cidade,:profilepic,:bio)";
 				$query = $this->db->pdo->prepare($sql);
 				$profilepic_path = "/assets/img/default_profile.png";
+				$emp = "empty";
 				$query->bindValue(':username',$username);
 				$query->bindParam(':name',$name);
-				$query->bindValue(':sobrenome','');
-				$query->bindValue(':contato1','');
-				$query->bindValue(':contato2','');
-				$query->bindValue(':birthday','');
-				$query->bindValue(':pais','');
-				$query->bindValue(':estado','');
-				$query->bindValue(':cidade','');
+				$query->bindValue(':sobrenome',$emp);
+				$query->bindValue(':contato1',$emp);
+				$query->bindValue(':contato2',$emp);
+				$query->bindValue(':birthday',$emp);
+				$query->bindValue(':pais',$emp);
+				$query->bindValue(':estado',$emp);
+				$query->bindValue(':cidade',$emp);
 				$query->bindValue(':profilepic',$profilepic_path);
-				$query->bindValue(':bio','');
+				$query->bindValue(':bio',$emp);
 				$query->execute();
-				unset($sql);
-				$sql = "SELECT username FROM pessoal_info WHERE username=:username";
-				$query->bindValue(':username',$username);
-				$query->execute();
-				$sql2 = "SELECT username FROM usuarios WHERE username=:username2";
-				$query2 = $this->db->pdo->prepare($sql2);
-				$query2->bindValue(':username2',$username);
-				$query2->execute();
-				if($query->rowCount() > 1 && $query2->rowCount() > 1){
-					return true;
-				}else{
-					return false;
-				}}
+	}
 		
 	private function tableProfesionalFill ($username){
-			$sql = "INSERT INTO profissional_info (servico1,servico2,nome_do_cargo,work_bio,desde,ate) VALUES (:servico1,:servico2,:nome_do_cargo,:work_bio,:desde,:ate)";
+			$sql = "INSERT INTO profissional_info (username,servico1,servico2,nome_do_cargo,work_bio,desde,ate) VALUES (:username,:servico1,:servico2,:nome_do_cargo,:work_bio,:desde,:ate)";
 			$query = $this->db->pdo->prepare($sql);
+			$query->bindValue(':username',$username);
 			$query->bindValue(':servico1','');
 			$query->bindValue(':servico2','');
 			$query->bindValue(':nome_do_cargo','');
@@ -155,40 +119,26 @@ class Handling{
 			$query->bindValue(':desde','');
 			$query->bindValue(':ate','');
 			$query->execute();
-			$sql = "SELECT username FROM profissional_info WHERE username=:username";
-			$query->bindValue(':username',$username);
-			$query->execute();
-			$sql2 = "SELECT username FROM usuarios WHERE username=:username2";
-			$query2 = $this->db->pdo->prepare($sql2);
-			$query2->bindValue(':username2',$username);
-			$query2->execute();
-			if($query->rowCount() > 1 && $query === $query2){
-				return true;
-			}else{
-				return false;
-			}}
+	}
 
 	private function tableScholarFill ($username){
-			$sql = "INSERT INTO escolaridade_info (username) VALUES (:username)";
+			$sql = "INSERT INTO escolaridade_info (username,escolaridade,area_de_estudo,instituicao,matriculado,desde,ate,habilidades) VALUES (:username,:escolaridade,:area_de_estudo,:instituicao,:matriculado,:desde,:ate,:habilidades)";
 			$query = $this->db->pdo->prepare($sql);
+			$emp = " ";
 			$query->bindValue(':username',$username);
+			$query->bindValue(':escolaridade',$emp);
+			$query->bindValue(':area_de_estudo',$emp);
+			$query->bindValue(':instituicao',$emp);
+			$query->bindValue(':matriculado',$emp);
+			$query->bindValue(':desde',$emp);
+			$query->bindValue(':ate',$emp);
+			$query->bindValue(':habilidades',$emp);
 			$query->execute();
-			$sql = "SELECT username FROM profissional_info WHERE username=:username";
-			$query->bindValue(':username',$username);
-			$query->execute();
-			$sql2 = "SELECT username FROM usuarios WHERE username=:username2";
-			$query2 = $this->db->pdo->prepare($sql2);
-			$query2->bindValue(':username2',$username);
-			$query2->execute();
-			if($query->rowCount() > 1 && $query === $query2){
-				return true;
-			}else{
-				return false;
-			}}
+	}
 					  
 
 	private function getLoginUser($email,$password){
-			$sql = "SELECT * FROM usuarios WHERE email=:email AND password=:password ";
+			$sql = "SELECT * FROM usuarios WHERE email=:email AND password=:password";
 			$query =  $this->db->pdo->prepare($sql);
 			$query->bindValue(':email',$email);
 			$query->bindValue(':password',$password);
@@ -205,10 +155,9 @@ class Handling{
 				Session::init();
 				Session::set('login',true);
 				Session::set('id',$result->id);
-				Session::set('name',$result->name);
 				Session::set('username',$result->username);
 				Session::set('email',$result->email);
-				Session::set('loginmsg',"<div class='alert alert-success'><strong>Seja bem vindo <?php echo Session::get('name'); ?></strong></div>");
+				Session::set('loginmsg',"<div class='alert alert-success'><strong>Seja bem vindo <?php echo Session::get('username'); ?></strong></div>");
 			}else{
 				$msg = "<div class='alert alert-danger'><strong>Usuário ou senha incorretos</strong></div>";
 				return $msg;
@@ -382,7 +331,6 @@ class pictureHandling{
 	public function __construct(){$this->db = new Database();}
 	private function __clone(){}
 	//ainda vou mexer aqui
-	public function pictureHandler($data){}
 
 }
 ?>

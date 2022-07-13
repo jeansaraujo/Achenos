@@ -35,7 +35,7 @@
 		public static function destroy(){
 			session_destroy();
 			session_unset();
-			header('Location:home.php');
+			header('Location:index.php');
 		}
 		
 	}

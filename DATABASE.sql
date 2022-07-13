@@ -1,13 +1,19 @@
 CREATE TABLE usuarios (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) NOT NULL UNIQUE,
+    username VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
     password VARCHAR(255) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+CREATE TABLE usuarios_fetch (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL
+);
 CREATE TABLE pessoal_info (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) NOT NULL UNIQUE,
+    username VARCHAR(50) NOT NULL,
     name VARCHAR(50) NOT NULL,
     sobrenome VARCHAR(100) NOT NULL,
     contato1 VARCHAR(50) NOT NULL,
@@ -21,7 +27,7 @@ CREATE TABLE pessoal_info (
 );
 CREATE TABLE profissional_info (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) NOT NULL UNIQUE,
+    username VARCHAR(50) NOT NULL,
     servico1 VARCHAR(50) NOT NULL,
     servico2 VARCHAR(50) NOT NULL,
     nome_do_cargo VARCHAR(50) NOT NULL,
@@ -31,7 +37,7 @@ CREATE TABLE profissional_info (
 );
 CREATE TABLE escolaridade_info (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) NOT NULL UNIQUE,
+    username VARCHAR(50) NOT NULL,
     escolaridade VARCHAR(50) NOT NULL,
     area_de_estudo VARCHAR(50) NOT NULL,
     instituicao VARCHAR(50) NOT NULL,

@@ -2,9 +2,12 @@
 
 class TableRows extends RecursiveIteratorIterator {
     private $db;
+    private $hand;
     
     public function __construct($it) {
     $this->db = new Database();
+    $this->hand = new Handling();
+    $this->hand->selectInto();
     parent::__construct($it, self::LEAVES_ONLY);
   }
 
@@ -22,7 +25,8 @@ class TableRows extends RecursiveIteratorIterator {
 
 
 public function queryWorkers(){
-  $sql = "SELECT name, username, email FROM usuarios";
+  
+  $sql = "SELECT name,username,email FROM usuarios_fetch";
   $query = $this->db->pdo->prepare($sql);
   $query->execute();
   $result = $query->setFetchMode(PDO::FETCH_ASSOC);
