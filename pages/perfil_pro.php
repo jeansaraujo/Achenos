@@ -1,6 +1,3 @@
-<?php
-include_once '../include/header.php';
-?>
 <div class="row">
     <div class="col">
         <p class="h2 text-center p-3 text-primary mt-3">Faça Seu Pefil Profissional</p>

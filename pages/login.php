@@ -12,6 +12,11 @@
     <div class="col">
         <p class="text-primary h2 text-end mt-2">
             Login
+            <?php
+        if (isset($userLogin)) {
+            echo $userLogin;
+        }
+    ?>
         </p>
     </div>
 </div>

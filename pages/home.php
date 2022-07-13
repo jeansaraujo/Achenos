@@ -59,27 +59,6 @@
     </div>
 </div>
 -->
-<style>
-    .carousel-item{
-        height:400px;
-    }
-    .carousel-caption>h5{
-        font-size: 30px;
-        color:#0d6efd;
-    }
-    .carousel-caption>p{
-        background-color:#ffc107;
-        border-radius:20px;
-        font-size: 20px;
-        padding:5px;
-    }
-
-</style>
-<div class="row">
-    <div class="col">
-        <p class="h2 text-primary text-end mt-2">Achenos</p>
-    </div>
-</div>
 <div class="row">
     <div class="col">
         <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
@@ -106,7 +85,7 @@
                 <div class="carousel-item">
                 <img src="https://i0.wp.com/kenzie.com.br/blog/wp-content/uploads/2021/01/kenzie_blog_desenvolvedor-de-software.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>Desenvolvedor de Sistemas</h5>
+                    <h5 class="dev">Desenvolvedor de Sistemas</h5>
                     <p>Pra quê Microsoft? Faça seu próprio Word</p>
                 </div>
                 </div>

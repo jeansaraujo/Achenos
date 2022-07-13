@@ -1,7 +1,7 @@
 <?php
 	class Session{
 		public static function init(){
-			if(version_compare(phpversion(),'5.4.0','<')){
+			if(version_compare(phpversion(),'7.1.0','<')){
 				if(session_id() == ''){
 					session_start();
 				}
@@ -29,7 +29,6 @@
 		}
 		public static function checkLogin(){
 			if (self::get('login') == true ) {
-				header('Location:index.php?page=perfil.php');
 			}
 		}
 		public static function destroy(){

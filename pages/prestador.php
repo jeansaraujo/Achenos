@@ -3,10 +3,10 @@
     Session::checkLogin();
 	$user = new Handling(); 
     ?>
-<div class="container" style="color: white;">
-<div class="row">
+
+<div class="row" style="margin-top: -2rem; padding-bottom: 3rem;">
     <div class="col">
-        <p class="h2 text-center mt-2">Listagem de Prestador</p>
+        <p class="h1 text-primary d-flex justify-content-center mt-5">Listagem de Prestador</p><hr>
     </div>
 </div>
 <div class="row">
@@ -19,7 +19,7 @@
                     <td class="text-center">Email</td>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="table-white">
                 <?php
                 $it = new RecursiveArrayIterator();
                 $result = new TableRows($it);
@@ -28,5 +28,4 @@
             </tbody>            
         </table>
     </div>
-</div>
 </div>
