@@ -15,7 +15,7 @@ class Handling{
 	private function updateDB($table,$params,$id){
 			$sql = "UPDATE $table SET ? = ? WHERE id = ?";
 			$query = $this->db->pdo->prepare($sql);
-			$query->bindValue('sss',$params,$params,$id);
+			$query->bindValue('ssi',$params,$params,$id);
 			$result = $query->execute();
 			return $result;
 		 }
@@ -382,6 +382,7 @@ class pictureHandling{
 	public function __construct(){$this->db = new Database();}
 	private function __clone(){}
 	//ainda vou mexer aqui
+	public function pictureHandler($data){}
 
 }
 ?>

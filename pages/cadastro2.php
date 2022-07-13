@@ -1,8 +1,12 @@
 <?php $user = new Handling();
       $user->db->unsetter();
+      $upload = new pictureHandling();
 	if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])){
 		$userReg	= $user->userPersonalRegistration($_POST);
 	}
+    if($_SERVER['REQUEST METHOD'] == 'POST' && isset($_FILES['profilepic']) && isset($_POST['upload'])){
+        $pichandling = $upload->pictureHandler($_POST);
+    }
 ?>
 <div class="row">
     <div class="col">
@@ -10,7 +14,14 @@
     </div>
         <?php if (isset($userReg)){echo $userReg;}?>
         <div class="row">
+            <form action="" enctype="multipart/form-data" method="POST">
+                <label for="profilepic">Foto: </label>
+                <input type="file" name="profilepic" id="profilepic">
+                <input type="hidden" name="id" value="<?php Session::get('id')?>">
+                <input type="submit" name="upload" value="Atualizar">
+            </form>
             <form method="POST" action="" autocomplete="off">
+                    <input type="hidden" name="id" value="<?php Session::get('id')?>">
                 <div class="nome-sobrenome">
                     <input type="text" class="form-control" id="name" name="name" value="<?php echo Session::get('name');?>"><br>                
                     <input type="text" class="form-control" id="sobrenome" name="sobrenome" placeholder="Sobrenome">
@@ -52,9 +63,7 @@
                     </select>
                     <input type="text" class="form-control" name="cidade" id="cidade" placeholder="Cidade">
                 </div>
-                <label for="profilepic">Foto: </label>
-                <input type="file" name="profilepic" id="profilepic">
-                <label for="bio">Sobre você:</label>
+                    <label for="bio">Sobre você:</label>
                     <textarea name="bio" rows="10" cols="50" maxlength="255" placeholder="Descreva um pouco sobre você"></textarea>
                     <div id="biospan"><span class="text-disabled">Até 255 caracteres</span></div>
                 <button type="submit" name="register" class="btn btn-outline-primary btn-lg mt-2">Prosseguir</button>
