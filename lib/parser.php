@@ -52,4 +52,7 @@ class Parser {
         $result = $query->execute();
         return $result;
         } 
+
+        
 }
+?>

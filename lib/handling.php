@@ -135,7 +135,7 @@ class Handling{
 			$id = $data['id'];
 			$result = $this->getUpdateName($name,$id);
 			if ($result){
-				$sql = "SELECT * FROM usuarios WHERE id=?";
+				$sql = "SELECT * FROM pesonal_info WHERE id=?";
 				$query = $this->db->pdo->prepare($sql);
 				$query->bindValue(1,$id);
 				$query->execute();
