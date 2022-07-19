@@ -48,6 +48,12 @@
                     case "cadastro":
                         include('pages/cadastro.php');
                         break;
+                    case "cadpess":
+                        include('pages/cadpess.php');
+                        break;
+                    case "cadprof":
+                        include('pages/cadprof.php');
+                        break;
                     case "login":
                         include('pages/login.php');
                         break;
