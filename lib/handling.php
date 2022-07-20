@@ -53,17 +53,27 @@ class Handling{
 			}
 	}
 	private function tablePessoalFill ($username,$name){
-		unset($sql); unset($query);
-		$sql = "INSERT INTO pessoal_info (username,name,sobrenome,contato1,contato2,birthday,pais,estado,cidade,profilepic,bio) VALUES (:username,:name,:sobrenome,:contato1,:contato2,:birthday,:pais,:estado,:cidade,:profilepic,:bio)";
+		// Recuperar ID de usuário
+		unset($sql); unset($query);		
+		$sql = "SELECT id FROM usuarios WHERE username = :USERNAME";
+		$query = $this->db->pdo->prepare($sql);
+		$query->bindParam(':USERNAME',$username);
+		$query->execute();
+		$user_id=$query->fetchAll(PDO::FETCH_ASSOC);
+		var_dump($user_id);
+		$id = $user_id[0]['id'];
+		// Lançar demais Informações
+		unset($sql); unset($query);		
+		$sql = "INSERT INTO pessoal_info (username,'name',sobrenome,contato1,contato2,birthday,pais,estado,cidade,profilepic,bio) VALUES (:username,:name,:sobrenome,:contato1,:contato2,:birthday,:pais,:estado,:cidade,:profilepic,:bio)";
 		$query = $this->db->pdo->prepare($sql);
 		$profilepic_path = "/assets/img/default_profile.png";
 		$emp = " ";
-		$query->bindValue(':username',$username);
+		$query->bindParam(':usuario_id',$id);
 		$query->bindParam(':name',$name);
 		$query->bindValue(':sobrenome',$emp);
 		$query->bindValue(':contato1',$emp);
-		$query->bindValue(':contato2',$emp);
-		$query->bindValue(':birthday',$emp);
+		$query->bindValue(':tpcontato1',$emp);
+		$query->bindValue(':contato2',$emp);				
 		$query->bindValue(':pais',$emp);
 		$query->bindValue(':estado',$emp);
 		$query->bindValue(':cidade',$emp);
@@ -72,9 +82,18 @@ class Handling{
 		$query->execute();
 	}		
 	private function tableProfesionalFill ($username){
-		$sql = "INSERT INTO profissional_info (username,servico1,servico2,nome_do_cargo,work_bio,desde,ate) VALUES (:username,:servico1,:servico2,:nome_do_cargo,:work_bio,:desde,:ate)";
+		// Recuperar ID de usuário
+		unset($sql); unset($query);		
+		$sql = "SELECT id FROM usuarios WHERE username = :USERNAME";
 		$query = $this->db->pdo->prepare($sql);
-		$query->bindValue(':username',$username);
+		$query->bindParam(':USERNAME',$username);
+		$query->execute();
+		$user_id=$query->fetchAll(PDO::FETCH_ASSOC);
+		$id = $user_id[0]['id'];
+		// Lançar demais Informações Profissionais
+		$sql = "INSERT INTO profissional_info (usuario_id,servico1,servico2,nome_do_cargo,work_bio,desde,ate) VALUES (:usuario_id,:servico1,:servico2,:nome_do_cargo,:work_bio,:desde,:ate)";
+		$query = $this->db->pdo->prepare($sql);
+		$query->bindValue(':usuario_id',$id);
 		$query->bindValue(':servico1','');
 		$query->bindValue(':servico2','');
 		$query->bindValue(':nome_do_cargo','');
@@ -84,10 +103,19 @@ class Handling{
 		$query->execute();
 	}
 	private function tableScholarFill ($username){
-		$sql = "INSERT INTO escolaridade_info (username,escolaridade,area_de_estudo,instituicao,matriculado,desde,ate,habilidades) VALUES (:username,:escolaridade,:area_de_estudo,:instituicao,:matriculado,:desde,:ate,:habilidades)";
+		// Recuperar ID de usuário
+		unset($sql); unset($query);		
+		$sql = "SELECT id FROM usuarios WHERE username = :USERNAME";
+		$query = $this->db->pdo->prepare($sql);
+		$query->bindParam(':USERNAME',$username);
+		$query->execute();
+		$user_id=$query->fetchAll(PDO::FETCH_ASSOC);
+		$id = $user_id[0]['id'];
+		// Lançar demais Informações Escolares
+		$sql = "INSERT INTO escolaridade_info (usuario_id,escolaridade,area_de_estudo,instituicao,matriculado,desde,ate,habilidades) VALUES (:usuario_id,:escolaridade,:area_de_estudo,:instituicao,:matriculado,:desde,:ate,:habilidades)";
 		$query = $this->db->pdo->prepare($sql);
 		$emp = " ";
-		$query->bindValue(':username',$username);
+		$query->bindValue(':usuario_id',$id);
 		$query->bindValue(':escolaridade',$emp);
 		$query->bindValue(':area_de_estudo',$emp);
 		$query->bindValue(':instituicao',$emp);
@@ -152,11 +180,15 @@ class Handling{
 		$result = $query->execute();
 		return $result;
 	}
-	function updateInfoPessoal($sobrenome,$cidade,$pais,$estado,$bio,$profilepic,$id){
-		$sql = "UPDATE pessoal_info SET sobrenome=:SOBRENOME, cidade=:CIDADE, pais=:PAIS, estado=:ESTADO, bio=:BIO, profilepic=:PROFILEPIC WHERE id=:ID";
+	public function updateInfoPessoal($sobrenome,$cidade,$contato1,$tpcontato1,$contato2,$birthday,$pais,$estado,$bio,$profilepic,$id){
+		$sql = "UPDATE pessoal_info SET sobrenome=:SOBRENOME, cidade=:CIDADE,contato1=:CONTATO1,tpcontato1=:TPCONTATO1,contato2=:CONTATO2,birthday=:BIRTHDAY, pais=:PAIS, estado=:ESTADO, bio=:BIO, profilepic=:PROFILEPIC WHERE id=:ID";
 		$query = $this->db->pdo->prepare($sql);		
 		$query->bindValue(':SOBRENOME',$sobrenome);
 		$query->bindValue(':CIDADE',$cidade);
+		$query->bindValue(':CONTATO1',$contato1);
+		$query->bindValue(':TPCONTATO1',$tpcontato1);
+		$query->bindValue(':CONTATO2',$contato2);
+		$query->bindValue(':BIRTHDAY',$birthday);
 		$query->bindValue(':PAIS',$pais);
 		$query->bindValue(':ESTADO',$estado);
 		$query->bindValue(':BIO',$bio);

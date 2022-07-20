@@ -16,21 +16,37 @@
         <?php if (isset($userReg)){echo $userReg;}?>
         <div class="row">
             <form enctype="multipart/form-data" method="POST" >
-                <input type="hidden" name="id" value="<?php Session::get('id')?>">                                
-                <label for="profilepic">Foto: </label>
-                <input type="file" name="profilepic" id="profilepic">
-                <div class="nome-sobrenome">
+                <input type="hidden" name="id" value="<?php echo Session::get('id')?>">                                
+                <label class="label-control">Foto:</label>
+                <input type="file" class="form-control" name="profilepic" id="profilepic">
+                <!-- Infos Básicas -->    
+                    <label class="label-control">Nome</label>            
                     <input type="text" class="form-control" id="name" name="nome" value="<?php echo Session::get('name');?>"><br>                
+                    <label class="label-control">Sobrenome</label>  
                     <input type="text" class="form-control" id="sobrenome" name="sobrenome" placeholder="Sobrenome">
-                </div>
-                <div class="contato">
-                    <input type="text" class="form-control" id="email" name="email" value="<?php echo Session::get('email');?>">                
-                    <input type="tel" class="form-control" id="contato" name="contato" placeholder="Contato">
-                </div>
-                <div class="localidade">
+                    <label class="label-control">Data de Nascimento</label>  
+                    <input type="date" class="form-control" id="birthday" name="birthday" placeholder="Data de Nascimento">                
+                    <label class="label-control">Email</label>  
+                    <input type="text" class="form-control" id="email" name="email" value="<?php echo Session::get('email');?>">
+                <!-- Fim de Infos Básicas -->
+                <!-- Contato -->                                    
+                    <label class="label-control">Contato Principal:</label>
+                    <input type="tel" class="form-control" id="contato" name="contato" placeholder="Contato">                
+                    <label class="label-control">Selecione o Tipo de Contato:</label>
+                    <select name="tipocontato" id="" class="form-control" placeholder="Opções do Contato">                        
+                        <option value="none">Nenhum</option>
+                        <option value="whatsapp">WhatsApp</option>
+                        <option value="telegram">Telegram</option>
+                        <option value="ambos">Ambos</option>                        
+                    </select>                    
+                    <label class="label-control">Contato Alternativo:</label>
+                    <input type="tel" class="form-control" id="contato" name="contato2" placeholder="Contato Alternativo">                
+                <!-- Fim de Contatos-->                
+                <!-- Localidade -->                
+                    <label class="label-control">Informe o País</label>
                     <input type="text" class="form-control" name="pais" id="pais" placeholder="País">
-                    <select class="form-control" name="estado" id="estado">
-                        <option value="none">Selecione seu estado</option>
+                    <label class="label-control">Selecione seu estado:</label>
+                    <select class="form-control" name="estado" id="estado">                        
                         <option value="Acre">Acre</option>
                         <option value="Alagoas">Alagoas</option>
                         <option value="Amapá">Amapá</option>
@@ -58,8 +74,9 @@
                         <option value="Sergipe">Sergipe</option>
                         <option value="Tocantins">Tocantins</option>
                     </select>
-                    <input type="text" class="form-control" name="cidade" id="cidade" placeholder="Cidade">
-                </div>
+                    <label class="label-control">Informe a Cidade:</label>
+                    <input type="text" class="form-control" name="cidade" id="cidade" placeholder="Cidade">                                
+                <!-- Fim Localidade -->
                     <label for="bio">Sobre você:</label>
                     <textarea name="bio" rows="10" cols="100" maxlength="255" placeholder="Descreva um pouco sobre você"></textarea>
                     <div id="biospan"><span class="text-disabled">Até 255 caracteres</span></div>
@@ -75,7 +92,13 @@
 if(isset($_POST['nome'])&&$_FILES['profilepic']){   
     //Carrega as info do formulário
     $id = $_POST['id'];
+    echo "ID: ".$id;
     $sobrenome = $_POST['sobrenome'];
+    $cidade = $_POST['cidade'];
+    $contato1 = $_POST['contato1'];
+    $tpcontato1 = $_POST['tpcontato1'];
+    $contato2 = $_POST['contato2'];
+    $birthday = $_POST['birthday'];
     $cidade = $_POST['cidade'];
     $estado = $_POST['estado'];
     $pais = $_POST['pais'];
@@ -93,7 +116,8 @@ if(isset($_POST['nome'])&&$_FILES['profilepic']){
     }
     // Se a movimentação da arq de foto for bem sucedida, inseri dados no banco
     if($arqMovido){
-        $resultado = $user->updateInfoPessoal($sobrenome,$cidade,$pais,$estado,$bio,$profilepic,$id);
+        $resultado = $user->updateInfoPessoal($sobrenome,$cidade,$contato1,$tpcontato1,$contato2,$birthday,$pais,$estado,$bio,$profilepic,$id);
+        var_dump($resultado);
         if ($resultado){
             echo "Alterado Banco";
         }
