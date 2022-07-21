@@ -9,7 +9,7 @@ class Handling{
 	}
 	private function __clone(){}
 	public function closeBD(){
-		$this->bd->unsetter();
+		$this->db->unsetter();
 	}
 	private function insertDB($table,$params){
 		$sql = "INSERT INTO $table (?) VALUES (?)";
