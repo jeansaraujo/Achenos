@@ -36,12 +36,13 @@ class Parser {
         }
      }
     public function getLoginUser($email,$password){
-        $sql = "SELECT usuarios.id, pessoal_info.name, usuarios.username, usuarios.email FROM usuarios INNER JOIN pessoal_info ON usuarios.id = pessoal_info.id WHERE email=:email AND password=:password";
+        $sql = "SELECT usuarios.id, usuarios.nome, usuarios.username, usuarios.email FROM usuarios WHERE email=:email AND password=:password";
         $query =  $this->db->pdo->prepare($sql);
         $query->bindValue(':email',$email);
         $query->bindValue(':password',$password);
         $query->execute();
         $result = $query->fetch(PDO::FETCH_OBJ);
+        //var_dump($result);
         return $result;
         } 
     public function updateDB($table,$params,$id){
