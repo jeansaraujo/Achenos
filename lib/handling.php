@@ -12,13 +12,13 @@ class Handling{
 		$this->bd->unsetter();
 	}
 	private function insertDB($table,$params){
-			$sql = "INSERT INTO $table (?) VALUES (?)";
-			$query = $this->db->pdo->prepare($sql);
-			$query->bindParam('ss',$params,$params);
-			$result = $query->execute();
-			return $result;
-			}
-		public function userRegistration($data){
+		$sql = "INSERT INTO $table (?) VALUES (?)";
+		$query = $this->db->pdo->prepare($sql);
+		$query->bindParam('ss',$params,$params);
+		$result = $query->execute();
+		return $result;
+	}
+	public function userRegistration($data){
 		$name	  = $data['name'];
 		$name =  filter_var($name, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_STRIP_HIGH);
 		$username = $data['username'];
@@ -30,16 +30,17 @@ class Handling{
 		$confirm = md5($data['confirmpassword']);
 		$checkpass = $password === $confirm;
 		if($checkpass){
-			$sql = "INSERT INTO usuarios (username,email,password) VALUES (? ,? ,? )";
+			$sql = "INSERT INTO usuarios (username,nome,email,password) VALUES (? ,? ,? ,?)";
 			$query = $this->db->pdo->prepare($sql);
 			$query->bindValue(1,$username);
-			$query->bindValue(2,$email);
-			$query->bindValue(3,$password);
+			$query->bindValue(2,$name);
+			$query->bindValue(3,$email);
+			$query->bindValue(4,$password);
 			$result = $query->execute();
 			if ($result) {
-				$this->tablePessoalFill($username,$name);
-				$this->tableProfesionalFill($username);
-				$this->tableScholarFill($username);
+				//$this->tablePessoalFill($username);
+				//$this->tableProfesionalFill($username);
+				//$this->tableScholarFill($username);
 				$msg = "<div class='alert alert-success'><strong>Cadastrado com sucesso!</strong></div>";
 				return $msg;
 				header('Location:index.php?page=login');
@@ -52,34 +53,60 @@ class Handling{
 			return $msg;
 			}
 	}
-	private function tablePessoalFill ($username,$name){
+	public function selectInfoPessoal ($usuario_id){		
+		unset($sql); unset($query);	
+		$sql = "SELECT * FROM pessoal_info WHERE usuario_id =:USUARIO_ID";
+		$query = $this->db->pdo->prepare($sql);		
+		$query->bindParam(':USUARIO_ID',$usuario_id);		
+		$query->execute();		
+		$result = $query->fetchAll(PDO::FETCH_ASSOC);				
+		return $result;
+	}
+	private function insertInfoPessoal ($cidade,$contato1,$tpcontato1,$contato2,$birthday,$pais,$estado,$bio,$profilepic,$id){
 		// Recuperar ID de usuário
-		unset($sql); unset($query);		
-		$sql = "SELECT id FROM usuarios WHERE username = :USERNAME";
-		$query = $this->db->pdo->prepare($sql);
-		$query->bindParam(':USERNAME',$username);
-		$query->execute();
-		$user_id=$query->fetchAll(PDO::FETCH_ASSOC);
-		var_dump($user_id);
-		$id = $user_id[0]['id'];
+		//unset($sql); unset($query);		
+		//$sql = "SELECT id,'name' FROM usuarios WHERE username = :USERNAME";
+		//$query = $this->db->pdo->prepare($sql);
+		//$query->bindParam(':USERNAME',$username);
+		//$query->execute();
+		//$user_id=$query->fetchAll(PDO::FETCH_ASSOC);
+		//var_dump($user_id);
+		//$id = $user_id[0]['id'];
+		//echo $id;
 		// Lançar demais Informações
-		unset($sql); unset($query);		
-		$sql = "INSERT INTO pessoal_info (username,'name',sobrenome,contato1,contato2,birthday,pais,estado,cidade,profilepic,bio) VALUES (:username,:name,:sobrenome,:contato1,:contato2,:birthday,:pais,:estado,:cidade,:profilepic,:bio)";
+		unset($sql); unset($query);	
+		$sql = "INSERT INTO pessoal_info (usuario_id,contato1,tpcontato1,contato2,birthday,pais,estado,cidade,profilepic,bio) VALUES (:USUARIO_ID,:CONTATO1,:TIPOCONTATO1,:CONTATO2,:BIRTHDAY,:PAIS,:ESTADO,:CIDADE,:PROFILEPIC,:BIO)";
 		$query = $this->db->pdo->prepare($sql);
 		$profilepic_path = "/assets/img/default_profile.png";
 		$emp = " ";
-		$query->bindParam(':usuario_id',$id);
-		$query->bindParam(':name',$name);
-		$query->bindValue(':sobrenome',$emp);
-		$query->bindValue(':contato1',$emp);
-		$query->bindValue(':tpcontato1',$emp);
-		$query->bindValue(':contato2',$emp);				
-		$query->bindValue(':pais',$emp);
-		$query->bindValue(':estado',$emp);
-		$query->bindValue(':cidade',$emp);
-		$query->bindValue(':profilepic',$profilepic_path);
-		$query->bindValue(':bio',$emp);
+		$query->bindParam(':USUARIO_ID',$id);				
+		$query->bindValue(':CONTATO1',$emp);
+		$query->bindValue(':TIPOCONTATO1',$emp);		
+		$query->bindValue(':CONTATO2',$emp);				
+		$query->bindValue(':PAIS',$emp);
+		$query->bindValue(':BIRTHDAY',$emp);
+		$query->bindValue(':ESTADO',$emp);
+		$query->bindValue(':CIDADE',$emp);
+		$query->bindValue(':PROFILEPIC',$profilepic_path);
+		$query->bindValue(':BIO',$emp);
+		//var_dump($query);
 		$query->execute();
+	}
+	public function updateInfoPessoal($cidade,$contato1,$tpcontato1,$contato2,$birthday,$pais,$estado,$bio,$profilepic,$id){
+		$sql = "UPDATE pessoal_info SET cidade=:CIDADE,contato1=:CONTATO1,tpcontato1=:TPCONTATO1,contato2=:CONTATO2,birthday=:BIRTHDAY, pais=:PAIS, estado=:ESTADO, bio=:BIO, profilepic=:PROFILEPIC WHERE id=:ID";
+		$query = $this->db->pdo->prepare($sql);				
+		$query->bindValue(':CIDADE',$cidade);
+		$query->bindValue(':CONTATO1',$contato1);
+		$query->bindValue(':TPCONTATO1',$tpcontato1);
+		$query->bindValue(':CONTATO2',$contato2);
+		$query->bindValue(':BIRTHDAY',$birthday);
+		$query->bindValue(':PAIS',$pais);
+		$query->bindValue(':ESTADO',$estado);
+		$query->bindValue(':BIO',$bio);
+		$query->bindValue(':PROFILEPIC',$profilepic);
+		$query->bindValue(':ID',$id);
+		$result = $query->execute();
+		return $result;
 	}		
 	private function tableProfesionalFill ($username){
 		// Recuperar ID de usuário
@@ -134,7 +161,7 @@ class Handling{
 			Session::init();
 			Session::set('login',true);
 			Session::set('id',$result->id);
-			Session::set('name',$result->name);
+			Session::set('name',$result->nome);
 			Session::set('username',$result->username);
 			Session::set('email',$result->email);
 			$loginmsg = "<div class='alert alert-success'><strong>Seja bem vindo <?php echo Session::get('name);?></strong></div>";
@@ -179,24 +206,7 @@ class Handling{
 		$query->bindValue(':id',$id);
 		$result = $query->execute();
 		return $result;
-	}
-	public function updateInfoPessoal($sobrenome,$cidade,$contato1,$tpcontato1,$contato2,$birthday,$pais,$estado,$bio,$profilepic,$id){
-		$sql = "UPDATE pessoal_info SET sobrenome=:SOBRENOME, cidade=:CIDADE,contato1=:CONTATO1,tpcontato1=:TPCONTATO1,contato2=:CONTATO2,birthday=:BIRTHDAY, pais=:PAIS, estado=:ESTADO, bio=:BIO, profilepic=:PROFILEPIC WHERE id=:ID";
-		$query = $this->db->pdo->prepare($sql);		
-		$query->bindValue(':SOBRENOME',$sobrenome);
-		$query->bindValue(':CIDADE',$cidade);
-		$query->bindValue(':CONTATO1',$contato1);
-		$query->bindValue(':TPCONTATO1',$tpcontato1);
-		$query->bindValue(':CONTATO2',$contato2);
-		$query->bindValue(':BIRTHDAY',$birthday);
-		$query->bindValue(':PAIS',$pais);
-		$query->bindValue(':ESTADO',$estado);
-		$query->bindValue(':BIO',$bio);
-		$query->bindValue(':PROFILEPIC',$profilepic);
-		$query->bindValue(':ID',$id);
-		$result = $query->execute();
-		return $result;
-	}
+	}	
 	public function updateEmail($data){
 		$id = $data['username'];
 		$email	  =	$data['email'];

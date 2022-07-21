@@ -8,7 +8,9 @@
     if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profilepic']) && isset($_POST['upload'])){
         $pichandling = $upload->pictureHandler($_POST);
     }
+    $dadosPessoais = $user->selectInfoPessoal(Session::get('id'));        
 ?>
+
 <div class="row">
     <div class="col">
         <p class="h2 text-end p-3 text-primary">Informações Pessoais</p>
@@ -21,17 +23,25 @@
                 <input type="file" class="form-control" name="profilepic" id="profilepic">
                 <!-- Infos Básicas -->    
                     <label class="label-control">Nome</label>            
-                    <input type="text" class="form-control" id="name" name="nome" value="<?php echo Session::get('name');?>"><br>                
-                    <label class="label-control">Sobrenome</label>  
-                    <input type="text" class="form-control" id="sobrenome" name="sobrenome" placeholder="Sobrenome">
+                    <input type="text" class="form-control" id="name" name="nome" value="<?php echo Session::get('name');?>"><br>                                    
                     <label class="label-control">Data de Nascimento</label>  
-                    <input type="date" class="form-control" id="birthday" name="birthday" placeholder="Data de Nascimento">                
+                    <input type="date" class="form-control" id="birthday" name="birthday" placeholder="Data de Nascimento" value="<?php
+                                                                                                                                        if(isset($dadosPessoais[0]['birthday']))
+                                                                                                                                        {
+                                                                                                                                            echo $dadosPessoais[0]['birthday'];
+                                                                                                                                        }
+                                                                                                                                    ?>">                
                     <label class="label-control">Email</label>  
                     <input type="text" class="form-control" id="email" name="email" value="<?php echo Session::get('email');?>">
                 <!-- Fim de Infos Básicas -->
                 <!-- Contato -->                                    
                     <label class="label-control">Contato Principal:</label>
-                    <input type="tel" class="form-control" id="contato" name="contato" placeholder="Contato">                
+                    <input type="tel" class="form-control" id="contato" name="contato" placeholder="Contato" value="<?php
+                                                                                                                        if(isset($dadosPessoais[0]['contato']))
+                                                                                                                        {
+                                                                                                                            echo $dadosPessoais[0]['contato'];
+                                                                                                                        }
+                                                                                                                    ?>">  
                     <label class="label-control">Selecione o Tipo de Contato:</label>
                     <select name="tipocontato" id="" class="form-control" placeholder="Opções do Contato">                        
                         <option value="none">Nenhum</option>
@@ -77,10 +87,14 @@
                     <label class="label-control">Informe a Cidade:</label>
                     <input type="text" class="form-control" name="cidade" id="cidade" placeholder="Cidade">                                
                 <!-- Fim Localidade -->
+                <!-- Descrição Pessoal -->
                     <label for="bio">Sobre você:</label>
-                    <textarea name="bio" rows="10" cols="100" maxlength="255" placeholder="Descreva um pouco sobre você"></textarea>
+                    <textarea class="form-control" name="bio" rows="5" cols="100" maxlength="255" placeholder="Descreva um pouco sobre você"></textarea>
                     <div id="biospan"><span class="text-disabled">Até 255 caracteres</span></div>
-                <button type="submit" name="update" class="btn btn-outline-primary btn-lg mt-2">Prosseguir</button>
+                <!-- Fim de Descrição Pessoal -->
+                <div class="w-100 d-flex justify-content-end">
+                    <button type="submit" name="update" class="btn btn-outline-primary btn-lg m-2">Prosseguir</button>
+                </div>
             </form>
         </div>
 </div>
@@ -116,7 +130,7 @@ if(isset($_POST['nome'])&&$_FILES['profilepic']){
     }
     // Se a movimentação da arq de foto for bem sucedida, inseri dados no banco
     if($arqMovido){
-        $resultado = $user->updateInfoPessoal($sobrenome,$cidade,$contato1,$tpcontato1,$contato2,$birthday,$pais,$estado,$bio,$profilepic,$id);
+        $resultado = $user->updateInfoPessoal($cidade,$contato1,$tpcontato1,$contato2,$birthday,$pais,$estado,$bio,$profilepic,$id);
         var_dump($resultado);
         if ($resultado){
             echo "Alterado Banco";
