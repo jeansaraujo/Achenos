@@ -1,9 +1,9 @@
 <header class="container-fluid">
     <div class="logo d-flex justify-content-center">
-        <img src="assets/img/logo_achenos.jpg">
+        <a href="?page=home"><img class="logo-img"src="assets/img/logo_achenos.jpg"></a>
     </div>
-    <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container">
+    <nav class="navbar navbar-expand-lg" id="navbar">
+        <div class="nav-container">
             <div class="row">
                 <div class="offset-1 col-10 offset-1">
                     <a class="navbar-brand" href="#"></a>
@@ -12,23 +12,23 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="d-flex justify-content-center align-items-center">
-                            <li class="caixa-item">
+                            <li class="caixa-item" role="button">
                                 <a class="caixa-link" href="?page=home">Home</a>
                             </li>
-                            <li class="caixa-item">
+                            <li class="caixa-item" role="button">
                                 <a class="caixa-link" href="?page=prestador">Prestador</a>
                             </li>
-                            <li class="caixa-item">
+                            <li class="caixa-item" role="button">
                                 <a class="caixa-link" href="?page=busca">Busca</a>
                             </li>                                                     
-                            <li class="caixa-item">
-                                <a class="caixa-link" href="?page=avaliacoes">Avaliacoes</a>
+                            <li class="caixa-item" role="button">
+                                <a class="caixa-link" href="?page=avaliacoes">Avaliações</a>
                             </li>
                             <?php
                                 if(empty(Session::get('id'))){ 
                             ?>
                                 <div class="dropdown">
-                                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="caixa-item dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                         Trabalhe Conosco
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -42,11 +42,11 @@
                                 { 
                             ?>
                                 <div class="dropdown">
-                                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Perfil
+                                    <button class="caixa-item dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <?php echo Session::get('username')?>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" href="?page=config">Configurações</a></li>
+                                        <li><a class="dropdown-item" href="?page=perfil">Meu Perfil</a></li>
                                         <li><a class="dropdown-item" href="?action=logout">Logout</a></li>                                        
                                     </ul>
                                 </div> 
