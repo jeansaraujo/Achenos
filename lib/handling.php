@@ -62,7 +62,7 @@ class Handling{
 		$result = $query->fetchAll(PDO::FETCH_ASSOC);				
 		return $result;
 	}
-	private function insertInfoPessoal ($cidade,$contato1,$tpcontato1,$contato2,$birthday,$pais,$estado,$bio,$profilepic,$id){
+	public function insertInfoPessoal ($cidade,$contato1,$tpcontato1,$contato2,$birthday,$pais,$estado,$bio,$profilepic,$id){
 		// Recuperar ID de usuário
 		//unset($sql); unset($query);		
 		//$sql = "SELECT id,'name' FROM usuarios WHERE username = :USERNAME";
