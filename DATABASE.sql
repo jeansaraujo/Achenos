@@ -1,4 +1,4 @@
-DROP DATABASE senac;
+    DROP DATABASE senac;
 CREATE DATABASE senac;
 USE senac;
 CREATE TABLE usuarios (

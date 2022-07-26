@@ -8,7 +8,8 @@
     if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profilepic']) && isset($_POST['upload'])){
         $pichandling = $upload->pictureHandler($_POST);
     }
-    $dadosPessoais = $user->selectInfoPessoal(Session::get('id'));        
+    $dadosPessoais = $user->selectInfoPessoal(Session::get('id'));
+    echo $dadosPessoais[0]['bio'];
 ?>
 
 <div class="row">
@@ -36,60 +37,147 @@
                 <!-- Fim de Infos Básicas -->
                 <!-- Contato -->                                    
                     <label class="label-control">Contato Principal:</label>
-                    <input type="tel" class="form-control" id="contato" name="contato" placeholder="Contato" value="<?php
-                                                                                                                        if(isset($dadosPessoais[0]['contato']))
+                    <input type="tel" class="form-control" id="contato" name="contato1" placeholder="Contato" value="<?php
+                                                                                                                        if(isset($dadosPessoais[0]['contato1']))
                                                                                                                         {
-                                                                                                                            echo $dadosPessoais[0]['contato'];
+                                                                                                                            echo $dadosPessoais[0]['contato1'];
                                                                                                                         }
                                                                                                                     ?>">  
                     <label class="label-control">Selecione o Tipo de Contato:</label>
-                    <select name="tipocontato" id="" class="form-control" placeholder="Opções do Contato">                        
-                        <option value="none">Nenhum</option>
-                        <option value="whatsapp">WhatsApp</option>
-                        <option value="telegram">Telegram</option>
-                        <option value="ambos">Ambos</option>                        
+                    <select name="tpcontato1"  class="form-control" placeholder="Opções do Contato" >                                                
+                        <option value="none"
+                            <?php
+                                if(isset($dadosPessoais[0]['tpcontato1']))
+                                {
+                                    if($dadosPessoais[0]['tpcontato1']=="none"){
+                                        echo "selected";
+                                    }
+                                }
+                            ?>                                                                            
+                        >Nenhum</option>
+                        <option value="whatsapp"
+                            <?php
+                                if(isset($dadosPessoais[0]['tpcontato1']))
+                                {
+                                    if($dadosPessoais[0]['tpcontato1']=="whatsapp"){
+                                        echo "selected";
+                                    }
+                                }
+                            ?>
+                        >WhatsApp</option>
+                        <option value="telegram" 
+                            <?php
+                                if(isset($dadosPessoais[0]['tpcontato1']))
+                                {
+                                    if($dadosPessoais[0]['tpcontato1']=="telegram"){
+                                        echo "selected";
+                                    }
+                                }
+                            ?>
+                        >Telegram</option>
+                        <option value="ambos" 
+                            <?php
+                                if(isset($dadosPessoais[0]['tpcontato1']))
+                                {
+                                    if($dadosPessoais[0]['tpcontato1']=="ambos"){
+                                        echo "selected";
+                                    }
+                                }
+                            ?>
+                        >Ambos</option>                        
                     </select>                    
                     <label class="label-control">Contato Alternativo:</label>
-                    <input type="tel" class="form-control" id="contato" name="contato2" placeholder="Contato Alternativo">                
+                    <input type="tel" class="form-control" id="contato" name="contato2" placeholder="Contato Alternativo" 
+                                                                                                                    value="<?php
+                                                                                                                        if(isset($dadosPessoais[0]['contato2']))
+                                                                                                                        {
+                                                                                                                            echo $dadosPessoais[0]['contato2'];
+                                                                                                                        }
+                                                                                                                    ?>">                  
                 <!-- Fim de Contatos-->                
                 <!-- Localidade -->                
                     <label class="label-control">Informe o País</label>
-                    <input type="text" class="form-control" name="pais" id="pais" placeholder="País">
+                    <input type="text" class="form-control" name="pais" id="pais" placeholder="País"
+                                                                                                                    value="<?php
+                                                                                                                        if(isset($dadosPessoais[0]['pais']))
+                                                                                                                        {
+                                                                                                                            echo $dadosPessoais[0]['pais'];
+                                                                                                                        }
+                                                                                                                    ?>">
                     <label class="label-control">Selecione seu estado:</label>
                     <select class="form-control" name="estado" id="estado">                        
-                        <option value="Acre">Acre</option>
-                        <option value="Alagoas">Alagoas</option>
-                        <option value="Amapá">Amapá</option>
-                        <option value="Amazonas">Amazonas</option>
-                        <option value="Bahia">Bahia</option>
-                        <option value="Ceará">Ceará</option>
-                        <option value="Distrito Federal">Distrito Federal</option>
-                        <option value="Espírito Santo">Espírito Santo</option>
-                        <option value="Goiás">Goiás</option>
-                        <option value="Maranhão">Maranhão</option>
-                        <option value="Mato Grosso">Mato Grosso</option>
-                        <option value="Mato Grosso do Sul">Mato Grosso do Sul</option>
-                        <option value="Minas Gerais">Minas Gerais</option>
-                        <option value="Pará">Pará</option>
-                        <option value="Paraná">Paraná</option>
-                        <option value="Pernambuco">Pernambuco</option>
-                        <option value="Piauí">Piauí</option>
-                        <option value="Rio de Janeiro">Rio de Janeiro</option>
-                        <option value="Rio Grande do Norte">Rio Grande do Norte</option>
-                        <option value="Rio Grande do Sul">Rio Grande do Sul</option>
-                        <option value="Rondônia">Rondônia</option>
-                        <option value="Roraima">Roraima</option>
-                        <option value="Santa Catarina">Santa Catarina</option>
-                        <option value="São Paulo">São Paulo</option>
-                        <option value="Sergipe">Sergipe</option>
-                        <option value="Tocantins">Tocantins</option>
+                        <option value="ac"
+                            <?php
+                                if(isset($dadosPessoais[0]['estado']))
+                                {
+                                    if($dadosPessoais[0]['estado']=="ac"){
+                                        echo "selected";
+                                    }
+                                }
+                            ?>                                                                                                        
+                        >Acre</option>
+                        <option value="al"
+                            <?php
+                                if(isset($dadosPessoais[0]['estado']))
+                                {
+                                    if($dadosPessoais[0]['estado']=="al"){
+                                        echo "selected";
+                                    }
+                                }
+                            ?> 
+                        >Alagoas</option>
+                        <option value="ap">Amapá</option>
+                        <option value="am">Amazonas</option>
+                        <option value="ba">Bahia</option>
+                        <option value="ce">Ceará</option>
+                        <option value="df">Distrito Federal</option>
+                        <option value="es">Espírito Santo</option>
+                        <option value="go">Goiás</option>
+                        <option value="ma">Maranhão</option>
+                        <option value="mt">Mato Grosso</option>
+                        <option value="ms">Mato Grosso do Sul</option>
+                        <option value="mg">Minas Gerais</option>
+                        <option value="pa">Pará</option>
+                        <option value="pr">Paraná</option>
+                        <option value="pe"
+                            <?php
+                                if(isset($dadosPessoais[0]['estado']))
+                                {
+                                    if($dadosPessoais[0]['estado']=="pe"){
+                                        echo "selected";
+                                    }
+                                }
+                            ?> 
+                        >Pernambuco</option>
+                        <option value="pi">Piauí</option>
+                        <option value="rj">Rio de Janeiro</option>
+                        <option value="rn">Rio Grande do Norte</option>
+                        <option value="rs">Rio Grande do Sul</option>
+                        <option value="rd">Rondônia</option>
+                        <option value="ro">Roraima</option>
+                        <option value="sc">Santa Catarina</option>
+                        <option value="sp">São Paulo</option>
+                        <option value="se">Sergipe</option>
+                        <option value="to">Tocantins</option>
                     </select>
                     <label class="label-control">Informe a Cidade:</label>
-                    <input type="text" class="form-control" name="cidade" id="cidade" placeholder="Cidade">                                
+                    <input type="text" class="form-control" name="cidade" id="cidade" placeholder="Cidade" value="<?php
+                                                                                                                        if(isset($dadosPessoais[0]['cidade']))
+                                                                                                                        {
+                                                                                                                            echo $dadosPessoais[0]['cidade'];
+                                                                                                                        }
+                                                                                                                    ?>">                              
                 <!-- Fim Localidade -->
                 <!-- Descrição Pessoal -->
                     <label for="bio">Sobre você:</label>
-                    <textarea class="form-control" name="bio" rows="5" cols="100" maxlength="255" placeholder="Descreva um pouco sobre você"></textarea>
+                    <input type="textarea"class="form-control" name="bio" rows="5" cols="100" maxlength="255" placeholder="Descreva um pouco sobre você" 
+                                                                                                                    value="<?php
+                                                                                                                        if(isset($dadosPessoais[0]['bio']))
+                                                                                                                        {
+                                                                                                                            echo $dadosPessoais[0]['bio'];
+                                                                                                                        }
+                                                                                                                    ?>">
+                    
                     <div id="biospan"><span class="text-disabled">Até 255 caracteres</span></div>
                 <!-- Fim de Descrição Pessoal -->
                 <div class="w-100 d-flex justify-content-end">
@@ -107,7 +195,6 @@ if(isset($_POST['nome'])&&$_FILES['profilepic']){
     //Carrega as info do formulário
     $id = $_POST['id'];
     echo "ID: ".$id;
-    $sobrenome = $_POST['sobrenome'];
     $cidade = $_POST['cidade'];
     $contato1 = $_POST['contato1'];
     $tpcontato1 = $_POST['tpcontato1'];
@@ -130,14 +217,14 @@ if(isset($_POST['nome'])&&$_FILES['profilepic']){
     }
     // Se a movimentação da arq de foto for bem sucedida, inseri dados no banco
     if($arqMovido){
-        $resultado = $user->updateInfoPessoal($cidade,$contato1,$tpcontato1,$contato2,$birthday,$pais,$estado,$bio,$profilepic,$id);
-        var_dump($resultado);
-        if ($resultado){
-            echo "Alterado Banco";
-        }
-        else{
-            echo "Algo de errado aconteceu";
-        }
+        if(isset($_GET['acao'])){
+            if($_GET['acao']="inserir"){
+                $resultado = $user->insertInfoPessoal($cidade,$contato1,$tpcontato1,$contato2,$birthday,$pais,$estado,$bio,$profilepic,$id);                
+            }
+            if($_GET['acao']="atualizar"){
+                $resultado = $user->updateInfoPessoal($cidade,$contato1,$tpcontato1,$contato2,$birthday,$pais,$estado,$bio,$profilepic,$id);                
+            }
+        }        
     }
     else{
         echo "Erro na movimentação de foto <br>";
