@@ -53,6 +53,14 @@ class Handling{
 			return $msg;
 			}
 	}
+	public function listaCategorias(){		
+		unset($sql); unset($query);	
+		$sql = "SELECT * FROM categoria";
+		$query = $this->db->pdo->prepare($sql);				
+		$query->execute();		
+		$result = $query->fetchAll(PDO::FETCH_ASSOC);				
+		return $result;
+	}
 	public function selectInfoPessoal ($usuario_id){		
 		unset($sql); unset($query);	
 		$sql = "SELECT * FROM pessoal_info WHERE usuario_id =:USUARIO_ID";
@@ -61,39 +69,27 @@ class Handling{
 		$query->execute();		
 		$result = $query->fetchAll(PDO::FETCH_ASSOC);				
 		return $result;
-	}
+	}	
 	public function insertInfoPessoal ($cidade,$contato1,$tpcontato1,$contato2,$birthday,$pais,$estado,$bio,$profilepic,$id){
-		// Recuperar ID de usuário
-		//unset($sql); unset($query);		
-		//$sql = "SELECT id,'name' FROM usuarios WHERE username = :USERNAME";
-		//$query = $this->db->pdo->prepare($sql);
-		//$query->bindParam(':USERNAME',$username);
-		//$query->execute();
-		//$user_id=$query->fetchAll(PDO::FETCH_ASSOC);
-		//var_dump($user_id);
-		//$id = $user_id[0]['id'];
-		//echo $id;
 		// Lançar demais Informações
 		unset($sql); unset($query);	
 		$sql = "INSERT INTO pessoal_info (usuario_id,contato1,tpcontato1,contato2,birthday,pais,estado,cidade,profilepic,bio) VALUES (:USUARIO_ID,:CONTATO1,:TIPOCONTATO1,:CONTATO2,:BIRTHDAY,:PAIS,:ESTADO,:CIDADE,:PROFILEPIC,:BIO)";
 		$query = $this->db->pdo->prepare($sql);
-		$profilepic_path = "/assets/img/default_profile.png";
-		$emp = " ";
+		$profilepic_path = "/assets/img/default_profile.png";		
 		$query->bindParam(':USUARIO_ID',$id);				
-		$query->bindValue(':CONTATO1',$emp);
-		$query->bindValue(':TIPOCONTATO1',$emp);		
-		$query->bindValue(':CONTATO2',$emp);				
-		$query->bindValue(':PAIS',$emp);
-		$query->bindValue(':BIRTHDAY',$emp);
-		$query->bindValue(':ESTADO',$emp);
-		$query->bindValue(':CIDADE',$emp);
-		$query->bindValue(':PROFILEPIC',$profilepic_path);
-		$query->bindValue(':BIO',$emp);
-		//var_dump($query);
+		$query->bindValue(':CONTATO1',$contato1);
+		$query->bindValue(':TIPOCONTATO1',$tpcontato1);		
+		$query->bindValue(':CONTATO2',$contato2);				
+		$query->bindValue(':PAIS',$pais);
+		$query->bindValue(':BIRTHDAY',$birthday);
+		$query->bindValue(':ESTADO',$estado);
+		$query->bindValue(':CIDADE',$cidade);
+		$query->bindValue(':PROFILEPIC',$profilepic);
+		$query->bindValue(':BIO',$bio);		
 		$query->execute();
 	}
-	public function updateInfoPessoal($cidade,$contato1,$tpcontato1,$contato2,$birthday,$pais,$estado,$bio,$profilepic,$id){
-		$sql = "UPDATE pessoal_info SET cidade=:CIDADE,contato1=:CONTATO1,tpcontato1=:TPCONTATO1,contato2=:CONTATO2,birthday=:BIRTHDAY, pais=:PAIS, estado=:ESTADO, bio=:BIO, profilepic=:PROFILEPIC WHERE id=:ID";
+	public function updateInfoPessoal($cidade,$contato1,$tpcontato1,$contato2,$birthday,$pais,$estado,$bio,$profilepic,$id){		
+		$sql = "UPDATE pessoal_info SET cidade=:CIDADE,contato1=:CONTATO1,tpcontato1=:TPCONTATO1,contato2=:CONTATO2,birthday=:BIRTHDAY, pais=:PAIS, estado=:ESTADO, bio=:BIO, profilepic=:PROFILEPIC WHERE usuario_id=:ID";
 		$query = $this->db->pdo->prepare($sql);				
 		$query->bindValue(':CIDADE',$cidade);
 		$query->bindValue(':CONTATO1',$contato1);
@@ -104,7 +100,7 @@ class Handling{
 		$query->bindValue(':ESTADO',$estado);
 		$query->bindValue(':BIO',$bio);
 		$query->bindValue(':PROFILEPIC',$profilepic);
-		$query->bindValue(':ID',$id);
+		$query->bindValue(':ID',$id);		
 		$result = $query->execute();
 		return $result;
 	}		
