@@ -11,7 +11,6 @@
     $dadosPessoais = $user->selectInfoPessoal(Session::get('id'));
     //echo $dadosPessoais[0]['bio'];
 ?>
-
 <div class="row">
     <div class="col-12">
         <p class="h2 text-end p-3 text-primary">Informações Pessoais</p>
@@ -30,7 +29,7 @@
     ?>
     
     <div class="row">
-        <form action="index.php?page=cadprof"enctype="multipart/form-data" method="POST" >
+        <form action="index.php?page=cadprof&acao=atualizar"enctype="multipart/form-data" method="POST" >
             <input type="hidden" name="id" value="<?php echo Session::get('id')?>">
             <input type="hidden" name="acao" value="<?php 
                                                            if(isset($_GET['acao'])){
@@ -38,7 +37,7 @@
                                                            }
                                                     ?>">                                 
             <label class="label-control">Foto:</label>
-            <input type="file" class="form-control" name="profilepic" id="profilepic">
+            <input type="file" class="form-control" name="profilepic" id="profilepic" required>
             <!-- Infos Básicas -->   
                 <label class="label-control">Nome</label>            
                 <input type="text" class="form-control" id="name" name="nome" disabled value="<?php echo Session::get('name');?>"><br>                                    

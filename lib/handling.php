@@ -103,6 +103,53 @@ class Handling{
 		$query->bindValue(':ID',$id);		
 		$result = $query->execute();
 		return $result;
+	}
+	public function listaInfoProfissional(){		
+		unset($sql); unset($query);	
+		$sql = "SELECT * FROM profissional_info prof JOIN pessoal_info pes ON prof.usuario_id = pes.usuario_id JOIN usuarios us ON prof.usuario_id = us.id";
+		$query = $this->db->pdo->prepare($sql);				
+		$query->execute();		
+		$result = $query->fetchAll(PDO::FETCH_ASSOC);		
+		return $result;
+	}
+	public function selectInfoProfissional($usuario_id){		
+		unset($sql); unset($query);	
+		$sql = "SELECT * FROM profissional_info WHERE usuario_id =:USUARIO_ID";
+		$query = $this->db->pdo->prepare($sql);		
+		$query->bindParam(':USUARIO_ID',$usuario_id);		
+		$query->execute();		
+		$result = $query->fetchAll(PDO::FETCH_ASSOC);				
+		return $result;
+	}	
+	public function insertInfoProf($endereco,$bairro,$cidade,$contato,$servico1,$servico2,$work_bio,$id){
+		// Lançar demais Informações
+		unset($sql); unset($query);	
+		$sql = "INSERT INTO profissional_info (usuario_id,endereco,bairro,cidade,contato,servico1,servico2,work_bio) VALUES (:USUARIO_ID,:ENDERECO,:BAIRRO,:CIDADE,:CONTATO,:SERVICO1,:SERVICO2,:WORK_BIO)";
+		$query = $this->db->pdo->prepare($sql);		
+		$query->bindParam(':USUARIO_ID',$id);				
+		$query->bindValue(':ENDERECO',$endereco);
+		$query->bindValue(':BAIRRO',$bairro);
+		$query->bindValue(':CIDADE',$cidade);		
+		$query->bindValue(':CONTATO',$contato);
+		$query->bindValue(':SERVICO1',$servico1);
+		$query->bindValue(':SERVICO2',$servico2);
+		$query->bindValue(':WORK_BIO',$work_bio);		
+		$query->execute();
+	}
+	public function updateInfoProf($endereco,$bairro,$cidade,$contato,$servico1,$servico2,$work_bio,$id){
+		// Lançar demais Informações
+		unset($sql); unset($query);	
+		$sql = "UPDATE profissional_info SET endereco=:ENDERECO,bairro=:BAIRRO,cidade=:CIDADE,contato=:CONTATO,servico1=:SERVICO1,servico2=:SERVICO2,work_bio = :WORK_BIO WHERE usuario_id = :USUARIO_ID";
+		$query = $this->db->pdo->prepare($sql);		
+		$query->bindParam(':USUARIO_ID',$id);				
+		$query->bindValue(':ENDERECO',$endereco);
+		$query->bindValue(':BAIRRO',$bairro);
+		$query->bindValue(':CIDADE',$cidade);		
+		$query->bindValue(':CONTATO',$contato);
+		$query->bindValue(':SERVICO1',$servico1);
+		$query->bindValue(':SERVICO2',$servico2);
+		$query->bindValue(':WORK_BIO',$work_bio);		
+		$query->execute();
 	}		
 	private function tableProfesionalFill ($username){
 		// Recuperar ID de usuário
