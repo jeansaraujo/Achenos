@@ -112,6 +112,15 @@ class Handling{
 		$result = $query->fetchAll(PDO::FETCH_ASSOC);		
 		return $result;
 	}
+	public function selectProfissional($id){		
+		unset($sql); unset($query);	
+		$sql = "SELECT * FROM profissional_info prof JOIN pessoal_info pes ON prof.usuario_id = pes.usuario_id JOIN usuarios us ON prof.usuario_id = us.id where usuarios.id = :ID";
+		$sql->bindParam(":ID",$id);
+		$query = $this->db->pdo->prepare($sql);				
+		$query->execute();		
+		$result = $query->fetchAll(PDO::FETCH_ASSOC);		
+		return $result;
+	}
 	public function selectInfoProfissional($usuario_id){		
 		unset($sql); unset($query);	
 		$sql = "SELECT * FROM profissional_info WHERE usuario_id =:USUARIO_ID";

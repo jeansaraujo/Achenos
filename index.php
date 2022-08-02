@@ -66,17 +66,19 @@
                     case "prestador":
                         include('pages/prestador.php');
                         break;
+                    case "detalhes":
+                        include('pages/detalhesprestador.php');
+                        break;
                     default:
                         include('pages/home.php');
                         break;
                 }
             }
-            else{
-                include('pages/home.php');
-            }            
+                     
         ?>
     </main>
     <footer class="footer">
+        <!--
         <div class="row">
             <div class="col"> 
                 <a class="btn  btn-outline-light" href="?page=home">Home</a>
@@ -94,6 +96,7 @@
                 <a class="btn  btn-outline-light" href="?page=sobrenos">Sobre nós</a>
             </div>
         </div>
+        -->
         <div class="row">        
             <div class="col">
                 <div class="contato-fb">
