@@ -24,7 +24,6 @@
 		public static function checkSession(){
 			if (self::get('login') == false) {
 				self::destroy();
-				
 			}
 		}
 		public static function checkLogin(){

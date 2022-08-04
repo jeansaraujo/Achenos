@@ -111,11 +111,18 @@ class Handling{
 		$query->execute();		
 		$result = $query->fetchAll(PDO::FETCH_ASSOC);		
 		return $result;
+	}	
+	public function listaInfoProfissionalPorServico($servico){		
+		unset($sql); unset($query);		
+		$sql = "SELECT * FROM profissional_info prof JOIN pessoal_info pes ON prof.usuario_id = pes.usuario_id JOIN usuarios us ON prof.usuario_id = us.id JOIN categoria ON categoria.id = prof.servico1 WHERE categoria.servico LIKE '%$servico%'";		
+		$query = $this->db->pdo->prepare($sql);					
+		$query->execute();		
+		$result = $query->fetchAll(PDO::FETCH_ASSOC);		
+		return $result;
 	}
 	public function selectProfissional($id){		
 		unset($sql); unset($query);	
-		$sql = "SELECT * FROM profissional_info prof JOIN pessoal_info pes ON prof.usuario_id = pes.usuario_id JOIN usuarios us ON prof.usuario_id = us.id where usuarios.id = :ID";
-		$sql->bindParam(":ID",$id);
+		$sql = "SELECT * FROM profissional_info prof JOIN pessoal_info pes ON prof.usuario_id = pes.usuario_id JOIN usuarios us ON prof.usuario_id = us.id where us.id = $id";		
 		$query = $this->db->pdo->prepare($sql);				
 		$query->execute();		
 		$result = $query->fetchAll(PDO::FETCH_ASSOC);		

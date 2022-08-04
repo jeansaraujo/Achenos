@@ -2,13 +2,29 @@
     require_once 'lib/queryhandling.php';
     Session::checkLogin();
 	$user = new Handling();
-    $profissionais =  $user->listaInfoProfissional();
+    $tipo = "";
+    if(isset($_GET['servico'])){
+        $servico = $_GET['servico'];
+        $tipo = "Selecionados";
+        $profissionais =  $user->listaInfoProfissionalPorServico($servico);        
+    }
+    else{
+        $tipo = "Todos";
+        $profissionais =  $user->listaInfoProfissional();        
+    }
     $categorias =  $user->listaCategorias();
     ?>
 
 <div class="row" style="margin-top: -2rem; padding-bottom: 3rem;">
     <div class="col">
-        <p class="h1 text-primary d-flex justify-content-center mt-5">Listagem de Prestador</p><hr>
+        <p class="h1 text-primary d-flex justify-content-center mt-5">Listagem de Serviços contendo o trecho ... &nbsp
+            <span class="text-danger">            
+                <?php
+                    echo " " ;
+                    echo isset($_GET['servico'])?$_GET['servico']:"";
+                ?>
+            </span>
+        </p><hr>
     </div>
 </div>
 <style>
@@ -35,8 +51,8 @@
                             }
                         }
                         echo "</h5>
-                        <hr>  
-                        <h5 class='card-title text-end'>".$prof['nome']."</h5>
+                        <hr>
+                        <h5 class='card-title text-end'>".$prof['nome']."</h5>                        
                         <hr>
                         <div class='d-flex justify-content-between align-itens-center'>
                             <span>".
