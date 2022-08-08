@@ -1,7 +1,8 @@
 <?php 
   Session::checkSession();
   $user = new Handling(); 
-?> 
+?>
+<div class="container"> 
 <div class="row">
   <div class="col">
     <div class="panel panel-default">
@@ -69,6 +70,7 @@
     </div>
   </div>
 </div>
+</div>
 <?php  
     if(isset($_POST['acao'])){      
       $acao = $_POST['acao'];
@@ -106,7 +108,7 @@
         $servico1 = $_POST['servico1'];
         $servico2 = $_POST['servico2'];
         $work_bio = $_POST['work_bio'];
-        $resultado = $user->inserirInfoProf($endereco,$bairro,$cidade,$contato,$servico1,$servico2,$work_bio,$id);
+        $resultado = $user->insertInfoProf($endereco,$bairro,$cidade,$contato,$servico1,$servico2,$work_bio,$id);
       }
     }
 ?>

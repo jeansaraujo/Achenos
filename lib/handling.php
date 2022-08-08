@@ -55,7 +55,7 @@ class Handling{
 	}
 	public function listaCategorias(){		
 		unset($sql); unset($query);	
-		$sql = "SELECT * FROM categoria";
+		$sql = "SELECT servico1, servico2 FROM profissional_info WHERE servico1 OR servico2 LIKE '%'";
 		$query = $this->db->pdo->prepare($sql);				
 		$query->execute();		
 		$result = $query->fetchAll(PDO::FETCH_ASSOC);				

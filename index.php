@@ -34,7 +34,7 @@
     <?php
         include_once 'include/header.php';       
     ?>    
-    <main class="container">        
+    <main class="maincontainer">        
         <?php
             if(isset($_GET['page'])){
                 $pagina = $_GET['page'];
@@ -95,7 +95,7 @@
             </div>        
             <div class="col contato-email-tel">
                 <p>
-                    Contate-nos:<br> Email: contatoachenos.gmail.com<br>Central de atendimento: (87) 3014-1789
+                    Contate-nos:<br> Email: contatoachenos@gmail.com<br>Central de atendimento: (87) 3014-1789
                 </p>
             </div>
         </div>

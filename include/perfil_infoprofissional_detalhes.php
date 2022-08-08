@@ -1,7 +1,7 @@
 <p class="h4 text-end">
     Dados Profissionais
 </p>
-<div style="width=100%">            
+<div style="width: 100%">            
     <table class="table table bordered table-stripted text-center">
         <thead class="table-light">
         <tr>

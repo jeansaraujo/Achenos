@@ -87,7 +87,7 @@
         $servico1 = $_POST['servico1'];
         $servico2 = $_POST['servico2'];
         $work_bio = $_POST['work_bio'];
-        $resultado = $user->inserirInfoProf($endereco,$bairro,$cidade,$contato,$servico1,$servico2,$work_bio,$id);
+        $resultado = $user->insertInfoProf($endereco,$bairro,$cidade,$contato,$servico1,$servico2,$work_bio,$id);
       }
     }
 ?>

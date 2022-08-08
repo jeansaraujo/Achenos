@@ -10,7 +10,8 @@ CREATE TABLE usuarios (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 CREATE TABLE pessoal_info (
-    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,        
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    sobrenome VARCHAR(200) NOT NULL,        
     contato1 VARCHAR(50) NOT NULL,
     tpcontato1 VARCHAR(50) NOT NULL,
     contato2 VARCHAR(50) NOT NULL,

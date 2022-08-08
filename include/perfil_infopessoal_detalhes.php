@@ -8,7 +8,7 @@
         ?>    
     ">
 </div> 
-<div style="width=100%">            
+<div style="width: 100%">            
     <table class="table table bordered table-stripted text-center">
         <thead class="table-light">
         <tr>
