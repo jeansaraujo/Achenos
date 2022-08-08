@@ -1,3 +1,6 @@
+main{
+    min-height: 40vh;
+}
 .logo-img{
     width: 12em;
 }
@@ -115,7 +118,7 @@ li>a{
     display: block;
 }
 .carousel-item{
-    height:100px;
+    height:300px;
 }
 .carousel-caption>h5{
     font-size: 30px;

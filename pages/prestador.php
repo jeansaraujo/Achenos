@@ -53,7 +53,7 @@
                                 ";
                             }
                             echo"
-                            <a target='_blank' href='index.php?page=detalhe&id=".$prof['usuario_id']."' class='btn btn-primary'>Mais Detalhes</a>
+                            <a target='_blank' href='index.php?page=detalhe&id=".$prof['usuario_id']."' class='btn btn-sm btn-primary text-sm'>Mais Detalhes</a>
                         </div>
                     </div>
                 </div>
