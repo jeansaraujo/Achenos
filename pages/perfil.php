@@ -15,6 +15,8 @@
           }
           Session::set('loginmsg',NULL);
           $dadosPessoais = $user->selectInfoPessoal(Session::get('id'));
+          $dadosProfissionais = $user->selectInfoProfissional(Session::get('id'));
+          $categorias = $user->listaCategorias();
         ?>        
       </div>
         <p class="h4 text-end">
@@ -59,7 +61,52 @@
           include_once("include/perfil_infopessoal.php");
         }
       ?>
+      <?php
+        if(isset($dadosProfissionais[0]['servico1'])){
+          include_once("include/perfil_infoprofissional.php");
+        }
+      ?>
     </div>
   </div>
 </div>
-
+<?php  
+    if(isset($_POST['acao'])){      
+      $acao = $_POST['acao'];
+      if($acao="atualizar"){               
+        $id = $_POST['id'];
+        $endereco = $_POST['endereco'];
+        $bairro = $_POST['bairro'];
+        $cidade = $_POST['cidade'];
+        $contato = $_POST['contato'];                
+        $servico1 = $_POST['servico1'];
+        $servico2 = $_POST['servico2'];
+        $work_bio = $_POST['work_bio'];
+        $qtd = $user->selectInfoProfissional($id);
+        if(isset($qtd[0]['id'])){
+          $resultado = $user->updateInfoProf($endereco,$bairro,$cidade,$contato,$servico1,$servico2,$work_bio,$id);          
+        }
+        else{
+          $id = $_POST['id'];
+          $endereco = $_POST['endereco'];
+          $bairro = $_POST['bairro'];
+          $cidade = $_POST['cidade'];
+          $contato = $_POST['contato'];                
+          $servico1 = $_POST['servico1'];
+          $servico2 = $_POST['servico2'];
+          $work_bio = $_POST['work_bio'];
+          $resultado = $user->insertInfoProf($endereco,$bairro,$cidade,$contato,$servico1,$servico2,$work_bio,$id);          
+        }
+      }
+      elseif($_POST['acao']=="novo"){
+        $id = $_POST['id'];
+        $endereco = $_POST['endereco'];
+        $bairro = $_POST['bairro'];
+        $cidade = $_POST['cidade'];
+        $contato = $_POST['contato'];                
+        $servico1 = $_POST['servico1'];
+        $servico2 = $_POST['servico2'];
+        $work_bio = $_POST['work_bio'];
+        $resultado = $user->inserirInfoProf($endereco,$bairro,$cidade,$contato,$servico1,$servico2,$work_bio,$id);
+      }
+    }
+?>

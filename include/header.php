@@ -5,7 +5,7 @@
     <nav class="navbar navbar-expand-lg" id="navbar">
         <div class="nav-container">
             <div class="row">
-                <div class="offset-1 col-10 offset-1">
+                <div class="offset-2 col-9 offset-1">
                     <a class="navbar-brand" href="#"></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -20,10 +20,12 @@
                             </li>
                             <li class="caixa-item" role="button">
                                 <a class="caixa-link" href="?page=busca">Busca</a>
-                            </li>                                                     
-                            <li class="caixa-item" role="button">
-                                <a class="caixa-link" href="?page=avaliacoes">Avaliações</a>
                             </li>
+                            <!--
+                                <li class="caixa-item" role="button">
+                                    <a class="caixa-link" href="?page=avaliacoes">Avaliações</a>
+                                </li>
+                            -->
                             <?php
                                 if(empty(Session::get('id'))){ 
                             ?>

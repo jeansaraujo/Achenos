@@ -7,7 +7,7 @@
     Session::init(); 
     if (isset($_GET['action']) && $_GET['action'] == 'logout') {
         Session::destroy();
-    }
+    }        
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +32,7 @@
 </head>
 <body>
     <?php
-        include_once 'include/header.php';
+        include_once 'include/header.php';       
     ?>    
     <main class="container">        
         <?php
@@ -41,7 +41,7 @@
                 switch($pagina){
                     case "home":
                         include('pages/home.php');
-                        break;
+                        break;                    
                     case "busca":
                         include('pages/busca.php');
                         break;
@@ -56,44 +56,28 @@
                         break;
                     case "login":
                         include('pages/login.php');
-                        break;
-                    case "avaliacoes":
-                        include('pages/avaliacoes.php');
-                        break;
+                        break;                    
                     case "perfil":
                         include('pages/perfil.php');
                         break;    
                     case "prestador":
                         include('pages/prestador.php');
                         break;
+                    case "detalhe":
+                        include('pages/detalhesprestador.php');
+                        break;        
+                    case "buscaprestador":
+                        include('pages/buscaprestador.php');
+                    break;                            
                     default:
                         include('pages/home.php');
-                        break;
+                        break;                    
                 }
             }
-            else{
-                include('pages/home.php');
-            }            
+                  
         ?>
     </main>
-    <footer class="footer">
-        <div class="row">
-            <div class="col"> 
-                <a class="btn  btn-outline-light" href="?page=home">Home</a>
-            </div>
-            <div class="col">
-                <a class="btn  btn-outline-light" href="?page=prestador">Prestador</a>        
-            </div>
-            <div class="col">
-                <a class="btn  btn-outline-light" href="?page=cadastro">Cadastro</a>
-            </div>
-            <div class="col">
-                <a class="btn  btn-outline-light" href="?page=login">Login</a>
-            </div>
-            <div class="col">
-                <a class="btn  btn-outline-light" href="?page=sobrenos">Sobre nós</a>
-            </div>
-        </div>
+    <footer class="footer">        
         <div class="row">        
             <div class="col">
                 <div class="contato-fb">
